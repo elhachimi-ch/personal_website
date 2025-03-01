@@ -3,103 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Researcher's Personal Website</title>
+    <title>Chouaib El Hachimi</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        header img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        header h1 {
-            color: #446688;
-            margin: 0;
-        }
-
-        header p {
-            margin: 0;
-        }
-
-        nav {
-            display: flex;
-            flex-direction: column;
-            margin-left: 2rem;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            margin-bottom: 1rem;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        nav ul li a:hover {
-            color: #446688;
-        }
-
-        main {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        main section {
-            width: 100%;
-            margin-bottom: 2rem;
-        }
-
-        main section h2 {
-            color: #446688;
-            margin-bottom: 1rem;
-        }
-
-        main section p {
-            margin-bottom: 2rem;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            font-size: 0.8rem;
-        }
-
-        /* Optional: Style the icons */
-    .logo-link {
-        margin-right: 0.15em; /* Adjust spacing between icons */
-        text-decoration: none; /* Remove underline */
-      }
-  
-      .logo-link:hover {
-        text-decoration: none; /* Remove underline on hover */
-      }
-    </style>
+   
 </head>
 <body>
     <header>
@@ -134,6 +40,22 @@
     </header>
     <main>
 
+
+        <section id="experience">
+            <h2>Experience</h2>
+
+            <p>
+                Visiting Scholar, March – October 2024, Department of Biological and Agricultural Engineering, University of California, Davis, USA
+            </p>
+
+            <p>
+                Assistant Teacher of Discrete Mathematics, 2022-2023: JUACS, UM6P, Ben Guerir, Morocco
+            </p>
+            <p>
+                Data scientist intern, Namyr Big Data Solutions, February 2019 -- July 2019, Hassan, Rabat, Morocco
+            </p>
+
+        </section>
          
         <section id="education">
             <h2>Education</h2>
@@ -167,28 +89,24 @@
         </section>
 
         
-        <section id="experience">
-            <h2>Experience</h2>
-            <p>
-
-                Assistant Teacher of Discrete Mathematics, 2022-2023: JUACS, UM6P, Ben Guerir, Morocco
-
-            </p>
-            <p>
-                Data scientist intern, Namyr Big Data Solutions, February 2019 -- July 2019, Hassan, Rabat, Morocco
-            </p>
-
-        </section>
-
-
+       
 
 
         <section id="publications">
             <h2>Recent Publications</h2>
+
+            
+            <p>
+                El Hachimi, C., Belaqziz, S., Khabba, S., Daccache, A., Ait Hssaine, B., Karjoun, H., Ouassanouan, Y., Sebbar, B., Kharrou, M. H., Er-Raki, S., & Chehbouni, A. (2025). Physics-informed neural networks for enhanced reference evapotranspiration estimation in Morocco: Balancing semi-physical models and deep learning. Chemosphere, 374, 144238. https://doi.org/10.1016/J.CHEMOSPHERE.2025.144238
+            </p>
+
+            <p>
+                El Hachimi, C., Salwa Belaqziz, ·, Khabba, S., Bouchra, ·, Hssaine, A., Mohamed, ·, Kharrou, H., & Chehbouni, · Abdelghani. (2024). Advancements in weather forecasting for precision agriculture: From statistical modeling to transformer-based architectures. Stochastic Environmental Research and Risk Assessment 2024, 1–23. https://doi.org/10.1007/S00477-024-02778-0
+            </p>
             
             <p>
                 El Hachimi, C., Khabba, S., Belaqziz, S., Ait Hssaine, B., Kharrou, M. H., & Chehbouni, A. (2024). Are raw satellite bands and machine learning all you need to retrieve actual evapotranspiration? E3S Web of Conferences, 489, 04019. https://doi.org/10.1051/E3SCONF/202448904019
-        </p>
+            </p>
 
 
         <p>
@@ -237,8 +155,6 @@ Sebbar, B. E., Khabba, S., Merlin, O., Simonneaux, V., Hachimi, C. El, Kharrou, 
 El Hachimi, C., Belaqziz, S., Khabba, S., & Chehbouni, A. (2020). A reinforcement learning based approach for efficient irrigation water management. Proceedings of 2020 African Conference of Precision Agriculture.
         </p>
 
-
-
             <p>
 Naim, A., Aaroud, A., Akodadi, K., & El Hachimi, C. (2021). A fully AI-based system to automate water meter data collection in Morocco country. Array, 10, 100056. https://doi.org/10.1016/J.ARRAY.2021.100056
         </p>
@@ -261,8 +177,113 @@ Naim, A., Aaroud, A., Akodadi, K., & El Hachimi, C. (2021). A fully AI-based sys
     </main>
     <footer>
         <p>
-            &copy; 2024 EL HACHIMI CHOUAIB. All rights reserved.
+            &copy; <span id="year"></span> EL HACHIMI CHOUAIB. All rights reserved.
         </p>
     </footer>
 </body>
+
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    header img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    header h1 {
+        color: #446688;
+        margin: 0;
+    }
+
+    header p {
+        margin: 0;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        margin-left: 2rem;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    nav ul li {
+        margin-bottom: 1rem;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    nav ul li a:hover {
+        color: #446688;
+    }
+
+    main {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    main section {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    main section h2 {
+        color: #446688;
+        margin-bottom: 1rem;
+    }
+
+    main section p {
+        margin-bottom: 2rem;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 4rem;
+        font-size: 0.8rem;
+    }
+
+    /* Optional: Style the icons */
+.logo-link {
+    margin-right: 0.15em; /* Adjust spacing between icons */
+    text-decoration: none; /* Remove underline */
+  }
+
+  .logo-link:hover {
+    text-decoration: none; /* Remove underline on hover */
+  }
+</style>
+
+
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
 </html>
