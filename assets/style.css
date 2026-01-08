@@ -405,6 +405,8 @@ body {
     border-radius: 8px;
     padding: 24px;
     transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
@@ -458,6 +460,7 @@ body {
     gap: 8px;
     flex-wrap: wrap;
     align-items: center;
+    margin-top: auto;
 }
 
 .badge {
