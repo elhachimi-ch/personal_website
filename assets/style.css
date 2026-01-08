@@ -434,7 +434,6 @@ body {
 /* Card logo placeholder/image shown left of title */
 .card-logo {
     width: 2em;
-    height: 2em;
     border-radius: 6px;
     flex: 0 0 28px;
     background-color: var(--secondary);
