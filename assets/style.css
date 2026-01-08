@@ -5,8 +5,8 @@
 }
 
 :root {
-    --primary: #1E40AF;
-    --primary-light: #3B82F6;
+    --primary: #C3262E;
+    --primary-light: #ce7175;
     --secondary: #F3F4F6;
     --secondary-dark: #E5E7EB;
     --background: #F8F8F7;
@@ -16,6 +16,7 @@
     --border-color: #D1D5DB;
     --card-bg: #FFFFFF;
     --accent: #0EA5E9;
+    --green-morocco: #006334;
 }
 
 body.dark-mode {
@@ -29,7 +30,7 @@ body.dark-mode {
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'candara', sans-serif;
     background-color: var(--background);
     color: var(--text-dark);
     line-height: 1.6;
@@ -76,20 +77,20 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 24px;
+    font-size: 27px;
     font-weight: bold;
     margin: 0 auto 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .profile-name {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: bold;
     margin-bottom: 8px;
 }
 
 .profile-title {
-    font-size: 14px;
+    font-size: 17px;
     color: var(--text-light);
 }
 
@@ -104,7 +105,7 @@ body {
 
 .nav-link {
     display: block;
-    padding: 12px 16px;
+    padding: 5px 16px;
     color: var(--text-dark);
     text-decoration: none;
     border-radius: 8px;
@@ -112,10 +113,10 @@ body {
     transition: all 0.2s;
     border: none;
     background: none;
-    font-size: 16px;
+    font-size: 19px;
     width: 100%;
     text-align: left;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'candara', sans-serif;
 }
 
 .nav-link:hover {
@@ -148,12 +149,19 @@ body {
     transition: all 0.2s;
     border: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 21px;
 }
 
 .social-link:hover {
     background-color: var(--primary);
     color: white;
+}
+
+/* Icon sizing inside social buttons */
+.social-link img {
+    width: 22px;
+    height: 22px;
+    display: block;
 }
 
 .theme-toggle {
@@ -163,11 +171,11 @@ body {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 600;
     color: var(--text-dark);
     transition: all 0.2s;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'candara', sans-serif;
 }
 
 .theme-toggle:hover {
@@ -195,7 +203,7 @@ body {
     cursor: pointer;
     width: 40px;
     height: 40px;
-    font-size: 20px;
+    font-size: 23px;
 }
 
 @media (max-width: 1024px) {
@@ -231,41 +239,41 @@ body {
 }
 
 .page-title {
-    font-size: 48px;
+    font-size: 51px;
     font-weight: bold;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 32px;
+    font-family: 'candara', sans-serif;
+    margin-bottom: 21px;
     color: var(--text-dark);
 }
 
 /* Hero Section */
 .hero {
-    padding: 64px 32px;
+    padding: 2em 32px;
     max-width: 1024px;
     margin: 0 auto;
 }
 
 .hero-title {
-    font-size: 72px;
+    font-size: 75px;
     font-weight: bold;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'candara', sans-serif;
     margin-bottom: 16px;
     color: var(--text-dark);
 }
 
 .hero-subtitle {
-    font-size: 24px;
+    font-size: 27px;
     color: var(--text-light);
     margin-bottom: 32px;
     font-weight: 500;
 }
 
 .hero-text {
-    font-size: 18px;
+    font-size: 21px;
     color: var(--text-dark);
     line-height: 1.8;
     margin-bottom: 24px;
-    max-width: 600px;
+    text-align: justify;
 }
 
 .cta-buttons {
@@ -280,7 +288,7 @@ body {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
     transition: all 0.2s;
     font-family: 'Outfit', sans-serif;
@@ -332,20 +340,20 @@ body {
 }
 
 .highlight-number {
-    font-size: 36px;
+    font-size: 39px;
     font-weight: bold;
     color: var(--primary);
     margin-bottom: 8px;
 }
 
 .highlight-label {
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
     margin-bottom: 8px;
 }
 
 .highlight-desc {
-    font-size: 14px;
+    font-size: 17px;
     color: var(--text-light);
 }
 
@@ -372,14 +380,14 @@ body {
 }
 
 .explore-card h3 {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
     margin-bottom: 12px;
     color: var(--text-dark);
 }
 
 .explore-card p {
-    font-size: 14px;
+    font-size: 17px;
     color: var(--text-light);
 }
 
@@ -404,10 +412,13 @@ body {
 }
 
 .card-title {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
     margin-bottom: 12px;
     color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .card-description {
@@ -415,10 +426,27 @@ body {
     color: var(--text-light);
     margin-bottom: 16px;
     line-height: 1.6;
+    text-align: justify;
+}
+
+/* Card logo placeholder/image shown left of title */
+.card-logo {
+    width: 2em;
+    height: 2em;
+    border-radius: 6px;
+    flex: 0 0 28px;
+    background-color: var(--secondary);
+    border: 1px solid var(--border-color);
+}
+
+.card-title img.card-logo {
+    object-fit: contain;
+    background: none;
+    border: none;
 }
 
 .card-meta {
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-light);
     margin-bottom: 16px;
     padding-bottom: 16px;
@@ -436,7 +464,7 @@ body {
     display: inline-block;
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -462,7 +490,7 @@ body {
     background-color: var(--secondary);
     color: var(--text-dark);
     cursor: pointer;
-    font-size: 12px;
+    font-size: 15px;
     transition: all 0.2s;
     text-decoration: none;
     display: inline-flex;
@@ -478,10 +506,10 @@ body {
 }
 
 .section-title {
-    font-size: 28px;
+    font-size: 31px;
     font-weight: bold;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
     border-bottom: 1px solid var(--border-color);
     color: var(--text-dark);
 }
@@ -501,14 +529,14 @@ body {
 }
 
 .stat-number {
-    font-size: 32px;
+    font-size: 35px;
     font-weight: bold;
     color: var(--primary);
     margin-bottom: 8px;
 }
 
 .stat-label {
-    font-size: 14px;
+    font-size: 17px;
     color: var(--text-light);
 }
 
@@ -524,6 +552,9 @@ body {
     position: relative;
     margin-bottom: 24px;
     padding-left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .timeline-dot {
@@ -538,16 +569,40 @@ body {
 }
 
 .timeline-content h4 {
-    font-size: 16px;
+    font-size: 19px;
     font-weight: bold;
     color: var(--text-dark);
     margin-bottom: 4px;
 }
 
 .timeline-meta {
-    font-size: 12px;
+    font-size: 17px;
     color: var(--text-light);
     margin-bottom: 8px;
+}
+
+/* Right-aligned logo inside timeline items */
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-logo {
+    width: 10em;
+    padding: 0.5em 0.5em;
+    flex: 0 0 40px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+}
+
+@media (max-width: 480px) {
+    .timeline-logo {
+        width: 10em;
+        flex-basis: 28px;
+        border-radius: 6px;
+        padding: 0.5em 0.5em;
+    }
 }
 
 /* Responsive */
@@ -561,15 +616,15 @@ body {
     }
 
     .hero-title {
-        font-size: 36px;
+        font-size: 41px;
     }
 
     .hero-subtitle {
-        font-size: 18px;
+        font-size: 21px;
     }
 
     .page-title {
-        font-size: 32px;
+        font-size: 35px;
     }
 
     .cards-grid {
