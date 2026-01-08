@@ -7,599 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #1E40AF;
-            --primary-light: #3B82F6;
-            --secondary: #F3F4F6;
-            --secondary-dark: #E5E7EB;
-            --background: #F8F8F7;
-            --sidebar-bg: #EBEBEB;
-            --text-dark: #1F2937;
-            --text-light: #6B7280;
-            --border-color: #D1D5DB;
-            --card-bg: #FFFFFF;
-            --accent: #0EA5E9;
-        }
-
-        body.dark-mode {
-            --background: #1F2937;
-            --sidebar-bg: #111827;
-            --text-dark: #F3F4F6;
-            --text-light: #D1D5DB;
-            --border-color: #374151;
-            --card-bg: #2D3748;
-            --secondary: #374151;
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--background);
-            color: var(--text-dark);
-            line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 256px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 24px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            left: 0;
-            top: 0;
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar.mobile-hidden {
-            transform: translateX(-100%);
-        }
-
-        .sidebar-header {
-            text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .profile-avatar {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0 auto 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .profile-title {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .nav-menu {
-            list-style: none;
-            margin-bottom: 24px;
-        }
-
-        .nav-item {
-            margin-bottom: 8px;
-        }
-
-        .nav-link {
-            display: block;
-            padding: 12px 16px;
-            color: var(--text-dark);
-            text-decoration: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            background: none;
-            font-size: 16px;
-            width: 100%;
-            text-align: left;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .nav-link:hover {
-            background-color: var(--secondary);
-        }
-
-        .nav-link.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--text-dark);
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .social-link:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .theme-toggle {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--secondary);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-dark);
-            transition: all 0.2s;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 256px;
-            flex: 1;
-            background-color: var(--background);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            z-index: 1001;
-            background: var(--sidebar-bg);
-            border: none;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 100%;
-                max-width: 256px;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
-        /* Page Sections */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page-content {
-            padding: 48px 32px;
-            max-width: 1024px;
-            margin: 0 auto;
-        }
-
-        .page-title {
-            font-size: 48px;
-            font-weight: bold;
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 32px;
-            color: var(--text-dark);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 64px 32px;
-            max-width: 1024px;
-            margin: 0 auto;
-        }
-
-        .hero-title {
-            font-size: 72px;
-            font-weight: bold;
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 16px;
-            color: var(--text-dark);
-        }
-
-        .hero-subtitle {
-            font-size: 24px;
-            color: var(--text-light);
-            margin-bottom: 32px;
-            font-weight: 500;
-        }
-
-        .hero-text {
-            font-size: 18px;
-            color: var(--text-dark);
-            line-height: 1.8;
-            margin-bottom: 24px;
-            max-width: 600px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 16px;
-            margin-top: 32px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.2s;
-            font-family: 'Outfit', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: var(--text-dark);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--secondary-dark);
-        }
-
-        /* Highlights Section */
-        .highlights {
-            background-color: var(--secondary);
-            padding: 48px 32px;
-            margin-top: 48px;
-        }
-
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            max-width: 1024px;
-            margin: 0 auto;
-        }
-
-        .highlight-card {
-            background-color: var(--card-bg);
-            padding: 24px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .highlight-number {
-            font-size: 36px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .highlight-label {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .highlight-desc {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        /* Explore Grid */
-        .explore-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .explore-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .explore-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .explore-card h3 {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .explore-card p {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        /* Publication/Project Cards */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 24px;
-            transition: all 0.2s;
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .card-description {
-            font-size: 14px;
-            color: var(--text-light);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .card-meta {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge-pi {
-            background-color: rgba(30, 64, 175, 0.1);
-            color: var(--primary);
-        }
-
-        .badge-copi {
-            background-color: rgba(14, 165, 233, 0.1);
-            color: var(--accent);
-        }
-
-        .badge-member {
-            background-color: var(--secondary);
-            color: var(--text-dark);
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background-color: var(--secondary);
-            color: var(--text-dark);
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .action-btn:hover {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .section-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-dark);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-            background-color: var(--secondary);
-            padding: 32px;
-            border-radius: 8px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            margin-top: 32px;
-            padding-left: 24px;
-            border-left: 2px solid var(--border-color);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 24px;
-            padding-left: 16px;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -7px;
-            top: 6px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--card-bg);
-        }
-
-        .timeline-content h4 {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-
-        .timeline-meta {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-bottom: 8px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .page-content {
-                padding: 32px 16px;
-            }
-
-            .hero {
-                padding: 32px 16px;
-            }
-
-            .hero-title {
-                font-size: 36px;
-            }
-
-            .hero-subtitle {
-                font-size: 18px;
-            }
-
-            .page-title {
-                font-size: 32px;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .explore-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
@@ -610,13 +18,13 @@
             <div class="sidebar-header">
                 <div class="profile-avatar">CE</div>
                 <div class="profile-name">Chouaib El Hachimi</div>
-                <div class="profile-title">Researcher & Scholar</div>
+                <div class="profile-title">Researcher & Postdoctoral Fellow</div>
             </div>
 
             <nav>
                 <ul class="nav-menu">
                     <li class="nav-item"><a href="#home" class="nav-link active" data-page="home">Homepage</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link" data-page="about">Bio</a></li>
+                    <li class="nav-item"><a href="#bio" class="nav-link" data-page="bio">Bio</a></li>
                     <li class="nav-item"><a href="#news" class="nav-link" data-page="news">News</a></li>
                     <li class="nav-item"><a href="#publications" class="nav-link" data-page="publications">Publications</a></li>
                     <li class="nav-item"><a href="#projects" class="nav-link" data-page="projects">Projects & Grants</a></li>
@@ -643,11 +51,10 @@
             <div id="home" class="page active">
                 <div class="hero">
                     <h1 class="hero-title">Chouaib El Hachimi</h1>
-                    <p class="hero-subtitle">Researcher & Scholar</p>
-                    <p class="hero-text">I am a dedicated researcher focused on advancing knowledge through rigorous investigation and innovative methodologies. My work spans multiple disciplines, with a commitment to publishing high-quality research and contributing to the academic community.</p>
+                    <p class="hero-subtitle">Researcher & Postdoctoral Fellow in GeoAI</p>
                     <p class="hero-text">This portfolio showcases my research interests, publications, and academic contributions. Explore the sections below to learn more about my work, recent news, and collaborations.</p>
                     <div class="cta-buttons">
-                        <button class="btn btn-primary" data-page="about">About Me →</button>
+                        <button class="btn btn-primary" data-page="bio">About Me →</button>
                         <button class="btn btn-secondary" data-page="publications">View Publications →</button>
                     </div>
                 </div>
@@ -703,82 +110,74 @@
             </div>
 
             <!-- About Page -->
-            <div id="about" class="page">
+            <div id="bio" class="page">
                 <div class="page-content">
                     <h1 class="page-title">Bio</h1>
                     <p style="font-size: 18px; line-height: 1.8; margin-bottom: 24px;">
-                        I am Chouaib El Hachimi, a Postdoctoral Fellow at the Research Centre for Artificial Intelligence in Geomatics, The Hong Kong Polytechnic University, Hong Kong. Previously, I was a Visiting Scholar in the Department of Biological and Agricultural Engineering at the University University of California, Davis, USA, during the 2023–2024 academic year.
+                        My research focuses on applying GeoAI, Earth Observation, and emerging technologies to develop actionable, high-impact solutions for sustainability, particularly in the domains of agriculture and water management.
                     </p>
                     <p style="font-size: 18px; line-height: 1.8; margin-bottom: 24px;">
-                        My research focuses on applying GeoAI, Earth Observation, and emerging technologies to develop actionable, high-impact solutions for sustainability—particularly in the domains of agriculture and water management.
+                        
                     </p>
                     <!-- <p style="font-size: 18px; line-height: 1.8; margin-bottom: 24px;">Beyond research, I am passionate about mentoring students and fostering a collaborative research environment. I believe in the importance of open science and knowledge sharing.</p> -->
-
-                    <h2 class="section-title" style="margin-top: 8px;">Education</h2>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">Ph.D., Computer Science</div>
-                            <div class="card-meta">2020 – 2024 | University A</div>
-                            <div class="card-description">Thesis on GeoAI and remote sensing for sustainable agriculture.</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">M.Sc., Data Science</div>
-                            <div class="card-meta">2018 – 2020 | University B</div>
-                            <div class="card-description">Focus on machine learning, computer vision, and geospatial analytics.</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">B.Sc., Computer Engineering</div>
-                            <div class="card-meta">2014 – 2018 | University C</div>
-                            <div class="card-description">Foundations in software engineering and applied AI.</div>
-                        </div>
-                    </div>
+                    
 
                     <h2 class="section-title" style="margin-top: 48px;">Experience</h2>
                     <div class="cards-grid">
                         <div class="card">
                             <div class="card-title">Postdoctoral Fellow</div>
-                            <div class="card-meta">2024 – Present | PolyU, Hong Kong</div>
-                            <div class="card-description">Research on GeoAI for water and agricultural systems; leading collaborations.</div>
+                            <div class="card-meta">May 2025 – Present | PolyU, Hong Kong</div>
+                            <div class="card-description">Within the Research Centre for Artificial Intelligence in Geomatics at PolyU, we are conducting research on GeoAI applications for water and agricultural systems in Africa.</div>
                         </div>
                         <div class="card">
                             <div class="card-title">Visiting Scholar</div>
-                            <div class="card-meta">2023 – 2024 | UC Davis, USA</div>
-                            <div class="card-description">Applied AI methods to Earth Observation for sustainable resource management.</div>
+                            <div class="card-meta">March 2024 – October 2024 | UC Davis, USA</div>
+                            <div class="card-description">Collaborate with Prof. Andre DACCACHE's Advanced Irrigation Lab members on ongoing projects related to precision agriculture and irrigation technologies, remote sensing, and artificial intelligence.</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Research Assistant</div>
-                            <div class="card-meta">2020 – 2023 | Lab X</div>
-                            <div class="card-description">Developed ML models and pipelines for environmental monitoring projects.</div>
+                            <div class="card-title">Assistant Teacher</div>
+                            <div class="card-meta">2020 – 2023 | Benguerir, Morocco</div>
+                            <div class="card-description">Assistant for teaching the Discrete Mathematics course at the Junior University of Applied Computer Science.</div>
                         </div>
                     </div>
 
-                    <h2 class="section-title" style="margin-top: 48px;">Career Timeline</h2>
+
+                    <h2 class="section-title" style="margin-top: 48px;">Education</h2>
                     <div class="timeline">
                         <div class="timeline-item">
                             <span class="timeline-dot"></span>
                             <div class="timeline-content">
-                                <h4>Postdoctoral Fellow</h4>
-                                <div class="timeline-meta">2024 – Present | PolyU, Hong Kong</div>
-                                <p class="card-description">Leading GeoAI research initiatives in geomatics and sustainability.</p>
+                                <h4>Ph.D.</h4>
+                                <div class="timeline-meta">July 2020 – April 2025 | Mohammed VI Polytechnic University</div>
+                                <p class="card-description">Artificial Intelligence, Data Science and Remote Sensing</p>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <span class="timeline-dot"></span>
                             <div class="timeline-content">
-                                <h4>Visiting Scholar</h4>
-                                <div class="timeline-meta">2023 – 2024 | UC Davis, USA</div>
-                                <p class="card-description">Collaborated on Earth Observation projects for agriculture and water.</p>
+                                <h4>Master of Research</h4>
+                                <div class="timeline-meta">2017 – 2019 | University of Chouaib Doukkali</div>
+                                <p class="card-description">Business Intelligence and Big Data Analytics</p>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <span class="timeline-dot"></span>
                             <div class="timeline-content">
-                                <h4>Ph.D. Completed</h4>
-                                <div class="timeline-meta">2020 – 2024 | University A</div>
-                                <p class="card-description">Dissertation on GeoAI applications to sustainability.</p>
+                                <h4>Bachelor Degree</h4>
+                                <div class="timeline-meta">2012 – 2017 | University of Chouaib Doukkali</div>
+                                <p class="card-description">Mathematics and Computer Science</p>
                             </div>
                         </div>
                     </div>
+
+
+                  
+
+
+                    
+                    
+
+
                 </div>
             </div>
 
