@@ -64,6 +64,9 @@
 
         <!-- Main Content -->
         <main class="main-content">
+            
+            
+            
             <!-- Home Page -->
             <div id="home" class="page active">
                 <div class="hero">
@@ -207,81 +210,12 @@
                 </div>
             </div>
 
-            <!-- News Page -->
-            <div id="news" class="page">
-                <div class="page-content">
-                    <h1 class="page-title">News & Updates</h1>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">New Paper Published</div>
-                            <div class="card-meta">January 2024</div>
-                            <div class="card-description">Our latest research on deep learning optimization has been accepted at a top-tier conference. This work presents novel approaches to improving model training efficiency.</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Research Grant Awarded</div>
-                            <div class="card-meta">December 2023</div>
-                            <div class="card-description">Received a significant research grant to support our work on federated learning and privacy-preserving AI systems.</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Keynote Speaker</div>
-                            <div class="card-meta">November 2023</div>
-                            <div class="card-description">Delivered a keynote address at the International Conference on Machine Learning, discussing future directions in AI research.</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Collaboration Announcement</div>
-                            <div class="card-meta">October 2023</div>
-                            <div class="card-description">Started a new collaborative research project with leading universities focusing on multi-modal learning systems.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Publications Page -->
             <div id="publications" class="page">
                 <div class="page-content">
                     <h1 class="page-title">Publications</h1>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">Advanced Deep Learning for Computer Vision</div>
-                            <div class="card-meta">Authors: Chouaib El Hachimi, et al. | 2024 | Top-tier Journal</div>
-                            <div class="card-description">This paper presents novel deep learning architectures for improved computer vision tasks including object detection and segmentation.</div>
-                            <div class="card-actions">
-                                <a href="#" class="action-btn">📄 PDF</a>
-                                <a href="#" class="action-btn">🔗 DOI</a>
-                                <a href="#" class="action-btn">📰 Publisher</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Multi-Modal Learning Systems</div>
-                            <div class="card-meta">Authors: Chouaib El Hachimi, et al. | 2023 | Conference Proceedings</div>
-                            <div class="card-description">Exploring multi-modal learning approaches that combine vision and language for improved cross-domain generalization.</div>
-                            <div class="card-actions">
-                                <a href="#" class="action-btn">📄 PDF</a>
-                                <a href="#" class="action-btn">🔗 DOI</a>
-                                <a href="#" class="action-btn">📰 Publisher</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Federated Learning for Privacy</div>
-                            <div class="card-meta">Authors: Chouaib El Hachimi, et al. | 2023 | Journal</div>
-                            <div class="card-description">Investigating federated learning algorithms that enable collaborative training while maintaining data privacy and security.</div>
-                            <div class="card-actions">
-                                <a href="#" class="action-btn">📄 PDF</a>
-                                <a href="#" class="action-btn">🔗 DOI</a>
-                                <a href="#" class="action-btn">📰 Publisher</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Robust Machine Learning</div>
-                            <div class="card-meta">Authors: Chouaib El Hachimi, et al. | 2023 | Conference</div>
-                            <div class="card-description">Addressing the challenge of distribution shift in machine learning models through novel training and adaptation techniques.</div>
-                            <div class="card-actions">
-                                <a href="#" class="action-btn">📄 PDF</a>
-                                <a href="#" class="action-btn">🔗 DOI</a>
-                                <a href="#" class="action-btn">📰 Publisher</a>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="cards-grid" id="publicationsContainer"></div>
                 </div>
             </div>
 
@@ -429,39 +363,33 @@
             <!-- People Page -->
             <div id="people" class="page">
                 <div class="page-content">
-                    <h1 class="page-title">Collaborators & Team</h1>
+                    <h1 class="page-title">Advisors</h1>
                     <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">Dr. Jane Smith</div>
-                            <div class="card-meta">Co-Researcher | University A</div>
-                            <div class="card-description">Specializing in computer vision and deep learning. Active collaborator on multiple research projects.</div>
+                        <div class="card"> 
+                            <div class="card-title">Prof. Abdelghani CHEHBOUNI</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Prof. John Doe</div>
-                            <div class="card-meta">Research Partner | Tech Institute B</div>
-                            <div class="card-description">Expert in machine learning optimization and federated learning systems.</div>
+                            <div class="card-title">Prof. Saïd KHABBA</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Dr. Maria Garcia</div>
-                            <div class="card-meta">Collaborator | International University</div>
-                            <div class="card-description">Focusing on multi-modal learning and cross-domain generalization research.</div>
+                            <div class="card-title">Prof. Salwa BELAQZIZ</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Dr. Ahmed Hassan</div>
-                            <div class="card-meta">Research Associate | Research Lab X</div>
-                            <div class="card-description">Contributing to privacy-preserving AI and secure machine learning initiatives.</div>
+                            <div class="card-title">Prof. Bouchra AIT HSSAINE</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Dr. Lisa Chen</div>
-                            <div class="card-meta">Graduate Student | University Z</div>
-                            <div class="card-description">Working on robust machine learning under distribution shift.</div>
+                            <div class="card-title">Prof. Andre DACCACHE</div>
                         </div>
                         <div class="card">
-                            <div class="card-title">Prof. Michael Brown</div>
-                            <div class="card-meta">Senior Advisor | Tech Company Y</div>
-                            <div class="card-description">Providing industry perspective and practical applications guidance.</div>
+                            <div class="card-title">Prof. Qihao WENG</div>
                         </div>
+                        <div class="card">
+                            <div class="card-title">Prof. Abdessadek AAROUD</div>
+                        </div>
+                        
                     </div>
+                    <h1 class="page-title">Co-authors</h1>
+                    <div class="cards-grid" id="coauthorsContainer"></div>
                 </div>
             </div>
 
@@ -497,9 +425,42 @@
                     </div>
                 </div>
             </div>
+
+            
+            <!-- News Page -->
+            <div id="news" class="page">
+                <div class="page-content">
+                    <h1 class="page-title">News & Updates</h1>
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-title">New Paper Published</div>
+                            <div class="card-meta">January 2024</div>
+                            <div class="card-description">Our latest research on deep learning optimization has been accepted at a top-tier conference. This work presents novel approaches to improving model training efficiency.</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Research Grant Awarded</div>
+                            <div class="card-meta">December 2023</div>
+                            <div class="card-description">Received a significant research grant to support our work on federated learning and privacy-preserving AI systems.</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Keynote Speaker</div>
+                            <div class="card-meta">November 2023</div>
+                            <div class="card-description">Delivered a keynote address at the International Conference on Machine Learning, discussing future directions in AI research.</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-title">Collaboration Announcement</div>
+                            <div class="card-meta">October 2023</div>
+                            <div class="card-description">Started a new collaborative research project with leading universities focusing on multi-modal learning systems.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </main>
     </div>
-
+    <script src="assets/publications.js"></script>
+    <script src="assets/people.js"></script>
     <script>
         // Page Navigation
         function showPage(pageId) {

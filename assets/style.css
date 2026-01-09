@@ -247,6 +247,9 @@ body {
 }
 
 /* Hero Section */
+
+/* People section: justify names and avoid flex alignment issues */
+
 .hero {
     padding: 2em 32px;
     max-width: 1024px;
@@ -291,7 +294,7 @@ body {
     font-size: 19px;
     font-weight: 600;
     transition: all 0.2s;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'candara', sans-serif;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -399,6 +402,16 @@ body {
     margin-top: 32px;
 }
 
+/* Publications: two cards per row on desktop/tablet */
+#publications .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* People: four cards per row on desktop/tablet */
+#people .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -409,12 +422,21 @@ body {
     flex-direction: column;
 }
 
+
+#people .card {
+    padding: 11px 24px;
+}
+
+#people .card-title {
+    margin: 0px;
+}
+
 .card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
-    font-size: 21px;
+    font-size: 19px;
     font-weight: bold;
     margin-bottom: 12px;
     color: var(--text-dark);
@@ -492,13 +514,13 @@ body {
     background-color: var(--secondary);
     color: var(--text-dark);
     cursor: pointer;
-    font-size: 15px;
+    font-size: 13px;
     transition: all 0.2s;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'candara', sans-serif;
 }
 
 .action-btn:hover {
@@ -630,6 +652,16 @@ body {
     }
 
     .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ensure publications are single column on small screens */
+    #publications .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ensure people is single column on small screens */
+    #people .cards-grid {
         grid-template-columns: 1fr;
     }
 
