@@ -39,6 +39,9 @@
       if (!res.ok) throw new Error('Failed to load coauthors.csv');
       const text = await res.text();
       const names = parseCSV(text);
+      try {
+        window.dispatchEvent(new CustomEvent('coauthors:loaded', { detail: { count: names.length } }));
+      } catch (_) { /* no-op */ }
       renderNames(names);
     } catch (err) {
       const el2 = document.getElementById(containerId);

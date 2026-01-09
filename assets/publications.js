@@ -82,6 +82,16 @@
       if (!res.ok) throw new Error('Failed to load publications.bib');
       const text = await res.text();
       const entries = parseBibTeX(text);
+      // Sort by year descending (non-numeric years treated as 0)
+      entries.sort((a, b) => {
+        const ya = parseInt(a.fields.year, 10) || 0;
+        const yb = parseInt(b.fields.year, 10) || 0;
+        return yb - ya;
+      });
+      try {
+        const count = entries.length;
+        window.dispatchEvent(new CustomEvent('publications:loaded', { detail: { count } }));
+      } catch (_) { /* no-op */ }
       render(entries);
       rendered = true;
     } catch (err) {

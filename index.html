@@ -83,8 +83,8 @@
                     <div style="max-width: 1024px; margin: 0 auto;">
                         <h2 style="font-size: 28px; font-weight: bold; margin-bottom: 32px; color: var(--text-dark);">Research Highlights</h2>
                         <div class="highlights-grid">
-                            <div class="highlight-card">
-                                <div class="highlight-number">50+</div>
+                            <div class="highlight-card" id="highlight-publications">
+                                <div class="highlight-number" id="highlight-publications-number">0+</div>
                                 <div class="highlight-label">Publications</div>
                                 <div class="highlight-desc">Peer-reviewed journal papers and conference proceedings</div>
                             </div>
@@ -99,8 +99,8 @@
                             -->
                             
                             
-                            <div class="highlight-card">
-                                <div class="highlight-number">20+</div>
+                            <div class="highlight-card" id="highlight-collaborators">
+                                <div class="highlight-number" id="highlight-collaborators-number">0+</div>
                                 <div class="highlight-label">Collaborators</div>
                                 <div class="highlight-desc">Working with leading researchers worldwide</div>
                             </div>
@@ -549,6 +549,35 @@
                 img.src = blackSrc;
             });
         });
+
+        // Dynamic Highlights: publications count and collaborators (co-authors + 7 advisors)
+        (function() {
+            const pubsEl = document.getElementById('highlight-publications-number');
+            const collabEl = document.getElementById('highlight-collaborators-number');
+            if (!pubsEl && !collabEl) return;
+
+            let pubsCount = 0;
+            let coauthorsCount = 0;
+            const advisorsFixed = 7;
+
+            function updateUI() {
+                if (pubsEl) pubsEl.textContent = `${pubsCount}+`;
+                if (collabEl) collabEl.textContent = `${coauthorsCount + advisorsFixed}+`;
+            }
+
+            window.addEventListener('publications:loaded', (e) => {
+                pubsCount = (e && e.detail && e.detail.count) ? e.detail.count : 0;
+                updateUI();
+            });
+
+            window.addEventListener('coauthors:loaded', (e) => {
+                coauthorsCount = (e && e.detail && e.detail.count) ? e.detail.count : 0;
+                updateUI();
+            });
+
+            // Initial render with zeros (in case data loads later)
+            updateUI();
+        })();
     </script>
 </body>
 </html>
