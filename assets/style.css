@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
+/* Arabic font face */
+@font-face {
+    font-family: 'SamirKhouajaMaghribi';
+    src: url('media/fonts/Samir.Khouaja.Maghribi.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --primary: #C3262E;
     --primary-light: #ce7175;
@@ -17,6 +26,7 @@
     --card-bg: #FFFFFF;
     --accent: #0EA5E9;
     --green-morocco: #006334;
+    --arabic-font: 'SamirKhouajaMaghribi', 'Noto Naskh Arabic', 'Scheherazade New', serif;
 }
 
 body.dark-mode {
@@ -35,6 +45,11 @@ body {
     color: var(--text-dark);
     line-height: 1.6;
     transition: background-color 0.3s, color 0.3s;
+}
+
+/* Use Arabic font for Arabic-language content or RTL spans */
+:lang(ar), [dir="rtl"], .font-arabic {
+    font-family: var(--arabic-font);
 }
 
 .container {
