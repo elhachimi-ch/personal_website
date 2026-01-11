@@ -224,100 +224,30 @@
                 <div class="page-content">
                     <h1 class="page-title">Projects & Grants</h1>
 
-                    <h2 class="section-title">Research Projects</h2>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">Advanced Deep Learning for Computer Vision</div>
-                            <div class="card-description">Developing novel deep learning architectures for improved computer vision tasks including object detection, segmentation, and scene understanding.</div>
-                            <div class="card-meta">Duration: 2023 - 2026 | Funding: $500,000 USD | Collaborators: University A, Tech Institute B</div>
-                            <div class="card-actions">
-                                <span class="badge badge-pi">Role: PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Multi-Modal Learning Systems</div>
-                            <div class="card-description">Exploring multi-modal learning approaches that combine vision and language for improved cross-domain generalization and transfer learning.</div>
-                            <div class="card-meta">Duration: 2023 - 2025 | Funding: $300,000 USD | Collaborators: Research Lab X, International University</div>
-                            <div class="card-actions">
-                                <span class="badge badge-copi">Role: Co-PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Federated Learning for Privacy-Preserving AI</div>
-                            <div class="card-description">Investigating federated learning algorithms that enable collaborative training while maintaining data privacy and security.</div>
-                            <div class="card-meta">Duration: 2022 - 2025 | Funding: $400,000 USD | Collaborators: Tech Company Y, University Z</div>
-                            <div class="card-actions">
-                                <span class="badge badge-pi">Role: PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Robust Machine Learning Under Distribution Shift</div>
-                            <div class="card-description">Addressing the challenge of distribution shift in machine learning models through novel training and adaptation techniques.</div>
-                            <div class="card-meta">Duration: 2023 - 2024 | Funding: $250,000 USD | Collaborators: Research Institute, Global Tech Partners</div>
-                            <div class="card-actions">
-                                <span class="badge badge-member">Role: Member</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-title" style="margin-top: 48px;">Research Grants</h2>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card-title">National Science Foundation Research Grant</div>
-                            <div class="card-description">Competitive grant for fundamental research in artificial intelligence and machine learning with focus on real-world applications.</div>
-                            <div class="card-meta">Duration: 2024 - 2027 | Funding: $600,000 USD</div>
-                            <div class="card-actions">
-                                <span class="badge badge-pi">Role: PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">European Research Council Advanced Grant</div>
-                            <div class="card-description">Support for cutting-edge research in computer vision and deep learning with international collaboration opportunities.</div>
-                            <div class="card-meta">Duration: 2024 - 2028 | Funding: $450,000 EUR | Collaborators: European Universities, International Partners</div>
-                            <div class="card-actions">
-                                <span class="badge badge-copi">Role: Co-PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Industry Partnership Research Initiative</div>
-                            <div class="card-description">Collaborative research grant with leading technology companies to develop practical AI solutions for real-world problems.</div>
-                            <div class="card-meta">Duration: 2023 - 2025 | Funding: $350,000 USD | Collaborators: Tech Company A, Tech Company B</div>
-                            <div class="card-actions">
-                                <span class="badge badge-pi">Role: PI</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-title">Emerging Research Leaders Program</div>
-                            <div class="card-description">Grant supporting early-career researchers in advancing innovative research in AI, machine learning, and computational sciences.</div>
-                            <div class="card-meta">Duration: 2023 - 2024 | Funding: $200,000 USD</div>
-                            <div class="card-actions">
-                                <span class="badge badge-member">Role: Member</span>
-                                <a href="#" class="action-btn">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="stats-grid">
                         <div class="stat">
-                            <div class="stat-number">8</div>
+                            <div class="stat-number"></div>
                             <div class="stat-label">Total Projects & Grants</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">4</div>
+                            <div class="stat-number"></div>
                             <div class="stat-label">Principal Investigator</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">$3.05M+</div>
+                            <div class="stat-number"></div>
                             <div class="stat-label">Total Funding</div>
                         </div>
                     </div>
+
+                    <h2 class="section-title">Research Projects</h2>
+                    <div class="cards-grid" id="projectsContainer"></div>
+
+                    
+                    <!-- Temporarily removed Grants section
+                    <h2 class="section-title" style="margin-top: 48px;">Research Grants</h2>
+                    <div class="cards-grid" id="grantsContainer"></div>
+                    -->
+                    
                 </div>
             </div>
 
@@ -461,6 +391,7 @@
     </div>
     <script src="assets/publications.js"></script>
     <script src="assets/people.js"></script>
+    <script src="assets/projects-grants.js"></script>
     <script>
         // Page Navigation
         function showPage(pageId) {

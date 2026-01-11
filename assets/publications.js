@@ -67,7 +67,7 @@
       const urlLink = makeLink(f.url, '📰 Publisher');
       return `
         <div class="card">
-          <div class="card-title">${title}</div>
+          <div class="card-title"><span class="card-title-text">${title}</span></div>
           <div class="card-meta">${meta}</div>
           <div class="card-actions">${[pdfLink, doiLink, urlLink].filter(Boolean).join('')}</div>
         </div>`;

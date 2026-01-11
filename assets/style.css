@@ -407,6 +407,20 @@ body {
     grid-template-columns: repeat(2, 1fr);
 }
 
+/* Publications: justify titles, avoid last-line gaps */
+#publications .card-title .card-title-text {
+    flex: 1;
+    display: block;
+    text-align: justify;
+    text-align-last: left; /* do not justify the final line */
+}
+
+/* Projects & Grants: two cards per row on desktop/tablet */
+#projectsContainer,
+#grantsContainer {
+    grid-template-columns: repeat(2, 1fr);
+}
+
 /* People: four cards per row on desktop/tablet */
 #people .cards-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -420,6 +434,7 @@ body {
     transition: all 0.2s;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 
@@ -443,7 +458,29 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative; /* layout for title + logo */
 }
+
+/* Center the names for Projects & Grants cards */
+#projectsContainer .card-title,
+#grantsContainer .card-title {
+    align-items: center;
+}
+
+/* Right-side brand/logo inside the title; square equals title height */
+/* Title text: justify across lines */
+#projectsContainer .card-title .card-title-text,
+#grantsContainer .card-title .card-title-text {
+    flex: 1;
+    width: auto;
+    display: block;
+    text-align: justify;
+    text-align-last: left; /* do not justify the last line to avoid gaps */
+}
+
+/* Remove the extra 80/20 split; full-width title text now */
+
+/* Remove logo box and image styles since logo appears on hover as background */
 
 .card-description {
     font-size: 14px;
@@ -456,7 +493,7 @@ body {
 /* Card logo placeholder/image shown left of title */
 .card-logo {
     width: 2em;
-    border-radius: 6px;
+    border-radius: 2px;
     flex: 0 0 28px;
     background-color: var(--secondary);
     border: 1px solid var(--border-color);
@@ -584,7 +621,7 @@ body {
 .timeline-dot {
     position: absolute;
     left: -7px;
-    top: 6px;
+    top: 0.59em;
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -611,21 +648,23 @@ body {
 }
 
 .timeline-logo {
-    width: 10em;
-    padding: 0.5em 0.5em;
-    flex: 0 0 40px;
-    object-fit: contain;
+    width: 10em;              /* fixed rectangular width */
+    height: 5em;             /* fixed rectangular height */
+    flex: 0 0 10em;           /* reserve fixed space equal to width */
+    object-fit: contain;     /* adapt logo to the box */
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background-color: var(--card-bg);
+    padding: 0.25em;         /* slight inner padding for aesthetics */
 }
 
 @media (max-width: 480px) {
     .timeline-logo {
-        width: 10em;
-        flex-basis: 28px;
+        width: 200px;         /* smaller rectangular size on mobile */
+        height: 100px;
+        flex-basis: 200px;
         border-radius: 6px;
-        padding: 0.5em 0.5em;
+        padding: 0.25em;
     }
 }
 
