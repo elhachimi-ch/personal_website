@@ -44,16 +44,19 @@
                     <a href="mailto:elhachimi.ch@gmail.com" class="social-link" title="Gmail">
                         <img alt="Gmail" src="https://cdn.simpleicons.org/gmail/black" data-brand="gmail" data-color="EA4335" />
                     </a>
-                    <a href="https://www.researchgate.net/" class="social-link" title="ResearchGate" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/in/elhachimi-ch/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <img alt="LinkedIn" src="assets/media/icons/linkedin-black.svg" data-brand="linkedin" data-color="0A66C2" data-black-src="assets/media/icons/linkedin-black.svg" data-color-src="assets/media/icons/linkedin-color.svg" />
+                    </a>
+                    <a href="https://www.researchgate.net/profile/Chouaib_El_Hachimi" class="social-link" title="ResearchGate" target="_blank" rel="noopener noreferrer">
                         <img alt="ResearchGate" src="https://cdn.simpleicons.org/researchgate/black" data-brand="researchgate" data-color="00CCBB" />
                     </a>
-                    <a href="https://scholar.google.com/" class="social-link" title="Google Scholar" target="_blank" rel="noopener noreferrer">
+                    <a href="https://scholar.google.com/citations?user=XFxWVxoAAAAJ&hl=en" class="social-link" title="Google Scholar" target="_blank" rel="noopener noreferrer">
                         <img alt="Google Scholar" src="https://cdn.simpleicons.org/googlescholar/black" data-brand="googlescholar" data-color="4285F4" />
                     </a>
-                    <a href="https://orcid.org/" class="social-link" title="ORCID" target="_blank" rel="noopener noreferrer">
+                    <a href="https://orcid.org/my-orcid?orcid=0000-0001-8019-1051" class="social-link" title="ORCID" target="_blank" rel="noopener noreferrer">
                         <img alt="ORCID" src="https://cdn.simpleicons.org/orcid/black" data-brand="orcid" data-color="A6CE39" />
                     </a>
-                    <a href="https://github.com/" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/elhachimi-ch" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
                         <img alt="GitHub" src="https://cdn.simpleicons.org/git/black" data-brand="git" data-color="F54D27" />
                     </a>
                 </div>
@@ -464,19 +467,23 @@
             showPage(initialHash);
         }
 
-        // Social icon hover: swap black icons to brand colors
-        document.querySelectorAll('.social-links .social-link img').forEach(img => {
+        // Social icon hover on the whole link: prefer local fallbacks if provided
+        document.querySelectorAll('.social-links .social-link').forEach(anchor => {
+            const img = anchor.querySelector('img');
+            if (!img) return;
+
             const brand = img.dataset.brand;
-            const color = img.dataset.color;
-            if (!brand || !color) return;
+            const colorHex = img.dataset.color;
 
-            const blackSrc = `https://cdn.simpleicons.org/${brand}/black`;
-            const colorSrc = `https://cdn.simpleicons.org/${brand}/${color}`;
+            const blackSrc = img.dataset.blackSrc || (brand ? `https://cdn.simpleicons.org/${brand}/black` : null);
+            const colorSrc = img.dataset.colorSrc || (brand && colorHex ? `https://cdn.simpleicons.org/${brand}/${colorHex}` : null);
 
-            img.addEventListener('mouseenter', () => {
+            if (!blackSrc || !colorSrc) return;
+
+            anchor.addEventListener('mouseenter', () => {
                 img.src = colorSrc;
             });
-            img.addEventListener('mouseleave', () => {
+            anchor.addEventListener('mouseleave', () => {
                 img.src = blackSrc;
             });
         });

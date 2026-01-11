@@ -585,6 +585,26 @@ body {
     border-radius: 8px;
 }
 
+/* Stats sections (Projects / Grants) */
+.stat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.group-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.group-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+}
+
 .stat {
     text-align: center;
 }

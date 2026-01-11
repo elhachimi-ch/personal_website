@@ -49,40 +49,60 @@
     const statsEl = document.querySelector('#projects .stats-grid');
     if (!statsEl) return;
 
-    const totalCount = (Array.isArray(projects) ? projects.length : 0) + (Array.isArray(grants) ? grants.length : 0);
-    const piCount = [projects, grants]
-      .filter(Array.isArray)
-      .flat()
-      .reduce((acc, item) => acc + (String(item.role || '').toLowerCase() === 'pi' ? 1 : 0), 0);
-    const totalFunding = [projects, grants]
-      .filter(Array.isArray)
-      .flat()
-      .reduce((sum, item) => sum + parseFundingAmount(item.funding), 0);
+    const pList = Array.isArray(projects) ? projects : [];
+    const gList = Array.isArray(grants) ? grants : [];
 
-    const tiles = [];
-    tiles.push(`
-      <div class="stat">
-        <div class="stat-number">${totalCount}</div>
-        <div class="stat-label">Total Projects & Grants</div>
-      </div>
-    `);
-    if (piCount > 0) {
-      tiles.push(`
-        <div class="stat">
-          <div class="stat-number">${piCount}</div>
-          <div class="stat-label">Principal Investigator</div>
+    const pCount = pList.length;
+    const gCount = gList.length;
+
+    const pPiCount = pList.reduce((acc, item) => acc + (String(item.role || '').toLowerCase() === 'pi' ? 1 : 0), 0);
+    const gPiCount = gList.reduce((acc, item) => acc + (String(item.role || '').toLowerCase() === 'pi' ? 1 : 0), 0);
+
+    const pFunding = pList.reduce((sum, item) => sum + parseFundingAmount(item.funding), 0);
+    const gFunding = gList.reduce((sum, item) => sum + parseFundingAmount(item.funding), 0);
+
+    function sectionMarkup(title, totalCount, piCount, funding, totalLabel) {
+      const parts = [];
+      parts.push(`
+        <div class="stat-group">
+          <div class="group-title">${title}</div>
+          <div class="group-stats">
+            <div class="stat">
+              <div class="stat-number">${totalCount}</div>
+              <div class="stat-label">${totalLabel}</div>
+            </div>
+      `);
+      if (piCount > 0) {
+        parts.push(`
+            <div class="stat">
+              <div class="stat-number">${piCount}</div>
+              <div class="stat-label">Principal Investigator</div>
+            </div>
+        `);
+      }
+      if (funding > 0) {
+        parts.push(`
+            <div class="stat">
+              <div class="stat-number">${formatUSD(funding)}</div>
+              <div class="stat-label">Total Funding</div>
+            </div>
+        `);
+      }
+      parts.push(`
+          </div>
         </div>
       `);
+      return parts.join('\n');
     }
-    if (totalFunding > 0) {
-      tiles.push(`
-        <div class="stat">
-          <div class="stat-number">${formatUSD(totalFunding)}</div>
-          <div class="stat-label">Total Funding</div>
-        </div>
-      `);
+
+    const sections = [
+      sectionMarkup('Projects', pCount, pPiCount, pFunding, 'Total Projects')
+    ];
+    if (gCount > 0) {
+      sections.push(sectionMarkup('Grants', gCount, gPiCount, gFunding, 'Total Grants'));
     }
-    statsEl.innerHTML = tiles.join('\n');
+
+    statsEl.innerHTML = sections.join('\n');
   }
 
   function roleClass(role) {
@@ -131,13 +151,28 @@
         card.appendChild(metaEl);
       }
 
-      if (item.role) {
+      // Actions: role badge + optional Details button when website exists
+      if (item.role || item.website) {
         const actionsEl = document.createElement('div');
         actionsEl.className = 'card-actions';
-        const badge = document.createElement('span');
-        badge.className = `badge ${roleClass(item.role)}`;
-        badge.textContent = `Role: ${item.role}`;
-        actionsEl.appendChild(badge);
+
+        if (item.role) {
+          const badge = document.createElement('span');
+          badge.className = `badge ${roleClass(item.role)}`;
+          badge.textContent = `Role: ${item.role}`;
+          actionsEl.appendChild(badge);
+        }
+
+        if (item.website) {
+          const link = document.createElement('a');
+          link.className = 'action-btn';
+          link.href = item.website;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = 'Details';
+          actionsEl.appendChild(link);
+        }
+
         card.appendChild(actionsEl);
       }
 
