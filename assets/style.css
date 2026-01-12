@@ -745,7 +745,7 @@ body {
 
     /* One highlight card per row on mobile */
     .highlights-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 
     .cta-buttons {
