@@ -743,6 +743,11 @@ body {
         grid-template-columns: 1fr;
     }
 
+    /* One highlight card per row on mobile */
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
     .cta-buttons {
         flex-direction: column;
     }
