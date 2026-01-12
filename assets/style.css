@@ -748,6 +748,13 @@ body {
         grid-template-columns: 1fr !important;
     }
 
+
+/* Ensure one highlight per row on larger mobile widths (landscape/plus sizes) */
+@media (max-width: 1024px) {
+    .highlights-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
     .cta-buttons {
         flex-direction: column;
     }
