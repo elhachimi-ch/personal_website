@@ -468,17 +468,49 @@
             }
         }
 
-        // Mobile Menu Toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        // Responsive sidebar helper: hide on mobile, show on desktop
+        function handleResponsiveSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar) return;
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.add('mobile-hidden');
+            } else {
+                sidebar.classList.remove('mobile-hidden');
+            }
+        }
+
+        // Mobile Menu Toggle (button explicitly opens/closes sidebar)
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(event) {
+            event.stopPropagation();
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('mobile-hidden');
+        });
+
+        // Click outside sidebar on mobile closes the menu
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            if (!sidebar || !menuBtn) return;
+
+            const isMobile = window.innerWidth <= 1024;
+            const sidebarOpen = !sidebar.classList.contains('mobile-hidden');
+            const clickInsideSidebar = sidebar.contains(event.target);
+            const clickOnButton = menuBtn.contains(event.target);
+
+            if (isMobile && sidebarOpen && !clickInsideSidebar && !clickOnButton) {
+                sidebar.classList.add('mobile-hidden');
+            }
         });
 
         // Theme toggle button
         document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 
-        // Initialize theme on page load
+        // Initialize theme and sidebar on page load
         updateTheme();
+        handleResponsiveSidebar();
+
+        // Update sidebar visibility on window resize
+        window.addEventListener('resize', handleResponsiveSidebar);
 
         // If a hash is present, show the corresponding page without hiding the sidebar
         const initialHash = window.location.hash.replace('#', '') || 'home';
