@@ -743,6 +743,12 @@ body {
         grid-template-columns: 1fr;
     }
 
+    /* Projects & Grants: one card per row on mobile */
+    #projectsContainer,
+    #grantsContainer {
+        grid-template-columns: 1fr;
+    }
+
     /* One highlight card per row on mobile */
     .highlights-grid {
         grid-template-columns: 1fr !important;
