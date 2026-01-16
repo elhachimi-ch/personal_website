@@ -128,6 +128,11 @@
       if (item.collaborators) metaParts.push(`Collaborators: ${item.collaborators}`);
       const metaText = metaParts.join(' | ');
 
+        const detailLines = [];
+        if (item.pi) detailLines.push(`PI: ${item.pi}`);
+        if (item["co-pi"]) detailLines.push(`Co-PI: ${item["co-pi"]}`);
+        if (item.keywords) detailLines.push(`Keywords: ${item.keywords}`);
+
       const card = document.createElement('div');
       card.className = 'card';
 
@@ -149,6 +154,13 @@
         metaEl.className = 'card-meta';
         metaEl.textContent = metaText;
         card.appendChild(metaEl);
+      }
+
+      if (detailLines.length > 0) {
+        const detailsEl = document.createElement('div');
+        detailsEl.className = 'card-description';
+        detailsEl.innerHTML = detailLines.join('<br>');
+        card.appendChild(detailsEl);
       }
 
       // Actions: role badge + optional Details button when website exists

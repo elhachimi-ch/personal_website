@@ -5,7 +5,9 @@
     "duration": "3 years",
     "funding": "",
     "collaborators": "",
-    "logo": "assets\\media\\projects_and_grants\\firma_logo.png"
+    "logo": "assets\\media\\projects_and_grants\\firma_logo.png",
+    "pi": "Prof. Dr. Markus Reichstein",
+    "keywords": "Precision Agriculture, Irrigation Management, Remote Sensing, Artificial Intelligence, Physics-Constrained Machine Learning"
   },
   {
     "name": "GEANTech: Sustainable Water Management in Agriculture: Innovation through a synergistic approach combining New Technologies and collective intelligence",
@@ -13,13 +15,18 @@
     "duration": "3 years",
     "funding": "",
     "collaborators": "",
-    "website": "https://geantechweb.com/"
+    "website": "https://geantechweb.com/",
+    "pi": "Prof. Lhoussaine BOUCHAOU",
+    "keywords": "Water Management, Remote Sensing, Collective Intelligence, Artificial Intelligence"
   },
   {
     "name": "Optimal Use of Satellite Thermal Infrared Image Data for Advancing Land Surface Temperature Analysis and Mitigating Urban Heat Stress",
     "role": "Team Member",
     "duration": "",
     "funding": "",
-    "collaborators": ""
+    "collaborators": "",
+    "pi": "Prof. Qihao WENG",
+    "keywords": "Earth Observation, Land Surface Temperature, Urban Heat Stress, Artificial Intelligence"
+
   }
 ]
