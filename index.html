@@ -411,6 +411,8 @@
 
         </main>
     </div>
+    <audio id="siteAudio" src="assets/media/audio/eid.mp3" preload="auto" autoplay loop playsinline muted></audio>
+    <button id="audioToggleBtn" class="audio-toggle-btn" type="button" aria-label="Pause audio" title="Pause audio">⏸</button>
     <script src="assets/publications.js"></script>
     <script src="assets/people.js"></script>
     <script src="assets/projects-grants.js"></script>
@@ -566,6 +568,68 @@
 
             // Initial render with zeros (in case data loads later)
             updateUI();
+        })();
+
+        // Floating audio control: start on page entry, unmute immediately if browser allows.
+        (function() {
+            const audio = document.getElementById('siteAudio');
+            const audioBtn = document.getElementById('audioToggleBtn');
+            if (!audio || !audioBtn) return;
+
+            function updateBtn() {
+                if (audio.paused) {
+                    audioBtn.textContent = '▶';
+                    audioBtn.title = audioBtn.getAttribute('aria-label') ? 'Play audio' : 'Play audio';
+                    audioBtn.setAttribute('aria-label', 'Play audio');
+                } else {
+                    audioBtn.textContent = audio.muted ? '🔇' : '⏸';
+                    audioBtn.title = audio.muted ? 'Unmute audio' : 'Pause audio';
+                    audioBtn.setAttribute('aria-label', audio.muted ? 'Unmute audio' : 'Pause audio');
+                }
+            }
+
+            // Step 1: muted autoplay is guaranteed by all browsers.
+            audio.muted = true;
+            audio.play().then(() => {
+                // Step 2: immediately try to unmute — works in many browsers.
+                audio.muted = false;
+                updateBtn();
+            }).catch(() => {
+                updateBtn();
+            });
+
+            // Step 3: if still muted or paused after autoplay, unmute on first user gesture.
+            function unmuteOnGesture() {
+                audio.muted = false;
+                if (audio.paused) {
+                    audio.play().catch(() => {});
+                }
+                updateBtn();
+                document.removeEventListener('click', unmuteOnGesture);
+                document.removeEventListener('keydown', unmuteOnGesture);
+                document.removeEventListener('touchstart', unmuteOnGesture);
+                document.removeEventListener('scroll', unmuteOnGesture);
+            }
+            document.addEventListener('click', unmuteOnGesture, { once: true });
+            document.addEventListener('keydown', unmuteOnGesture, { once: true });
+            document.addEventListener('touchstart', unmuteOnGesture, { once: true });
+            document.addEventListener('scroll', unmuteOnGesture, { once: true });
+
+            // Toggle button: play/pause
+            audioBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (audio.paused) {
+                    audio.muted = false;
+                    audio.play().then(updateBtn).catch(updateBtn);
+                } else {
+                    audio.pause();
+                    updateBtn();
+                }
+            });
+
+            audio.addEventListener('play', updateBtn);
+            audio.addEventListener('pause', updateBtn);
+            updateBtn();
         })();
     </script>
 </body>

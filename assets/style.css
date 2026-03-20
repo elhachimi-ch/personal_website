@@ -770,3 +770,40 @@ body {
         justify-content: center;
     }
 }
+
+    /* Floating audio control */
+    .audio-toggle-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 52px;
+        height: 52px;
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        background-color: var(--card-bg);
+        color: var(--text-dark);
+        font-size: 20px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1200;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+        transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .audio-toggle-btn:hover {
+        transform: translateY(-2px);
+        background-color: var(--primary);
+        color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+        .audio-toggle-btn {
+            right: 14px;
+            bottom: 14px;
+            width: 48px;
+            height: 48px;
+        }
+    }
