@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Data Science Toolkit",
+    "descreption": "Data Science Toolkit (DST) is a Python library that helps implement data science related project with ease.",
+    "repo": "https://github.com/elhachimi-ch/dst",
+    "paper": "https://www.sciencedirect.com/science/article/pii/S2665963822000124",
+    "live demo": ""
+  },
+  {
+    "title": "ClimateFiller",
+    "descreption": "ClimateFiller is a python framework for in-situ climate time series diagnosis. It enables: (1) Gap-Filling (2) Bias Correction (3) Anomaly Detection.",
+    "repo": "https://github.com/elhachimi-ch/climatefiller",
+    "paper": "https://www.sciencedirect.com/science/article/pii/S2665963823001124",
+    "live demo": ""
+  },
+  {
+    "title": "LULC Data Collection App",
+    "descreption": "This app was implemented using Google Earth Engine to facilitate land use and land cover data collection for the RCAIG, polyU team.",
+    "repo": "https://github.com/elhachimi-ch/gee_apps/blob/main/apps/gee_annotation_lulc_app.js",
+    "paper": "",
+    "live demo": "https://climatefiller-427208.projects.earthengine.app/view/lulc-data-collection-app"
+  },
+  {
+    "title": "African Cities LULC Annotation App",
+    "descreption": "Google Earth Engine APP for LULC Data Collection Over African Cities.",
+    "repo": "https://github.com/elhachimi-ch/gee_apps/blob/main/apps/gee_annotation_african_cities.js",
+    "paper": "",
+    "live demo": "https://climatefiller-427208.projects.earthengine.app/view/african-cities-lulc"
+  }
+]
