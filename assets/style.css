@@ -87,13 +87,8 @@ body {
     width: 96px;
     height: 96px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 27px;
-    font-weight: bold;
+    object-fit: cover;
+    display: block;
     margin: 0 auto 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
