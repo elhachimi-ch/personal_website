@@ -1,0 +1,8 @@
+# Site display mode: "normal", "celebrations", or "7idad"
+mode: celebrations
+
+# Seconds between automatic confetti bursts at the cursor (celebrations mode only)
+animation_automation_time_interval: 3
+
+# Also trigger confetti on mouse click (celebrations mode only)
+celebration_when_click: true
