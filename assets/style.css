@@ -138,6 +138,46 @@ body {
     color: white;
 }
 
+.nav-group-toggle {
+    position: relative;
+}
+
+.nav-group-toggle::after {
+    content: '\25BE';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    transition: transform 0.2s ease;
+}
+
+.nav-group.open .nav-group-toggle::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-submenu {
+    list-style: none;
+    margin-top: 4px;
+    margin-left: 8px;
+    padding-left: 10px;
+    border-left: 1px solid var(--border-color);
+    display: none;
+}
+
+.nav-group.open .nav-submenu {
+    display: block;
+}
+
+.nav-subitem {
+    margin: 4px 0;
+}
+
+.nav-sublink {
+    font-size: 17px;
+    padding: 4px 12px;
+}
+
 .social-links {
     display: flex;
     gap: 12px;

@@ -34,6 +34,12 @@
                     
                     <li class="nav-item"><a href="#people" class="nav-link" data-page="people">People</a></li>
                     <li class="nav-item"><a href="#code" class="nav-link" data-page="code">Code & Demos</a></li>
+                    <li class="nav-item nav-group" id="servicesNavGroup">
+                        <button type="button" class="nav-link nav-group-toggle" id="servicesToggle" aria-expanded="false">Services</button>
+                        <ul class="nav-submenu" id="servicesSubmenu">
+                            <li class="nav-subitem"><a href="#reviewing" class="nav-link nav-sublink" data-page="reviewing">Reviewing</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a href="#news" class="nav-link" data-page="news">News</a></li>
                 </ul>
             </nav>
@@ -348,6 +354,14 @@
                 </div>
             </div>
 
+            <!-- Services: Reviewing Page -->
+            <div id="reviewing" class="page">
+                <div class="page-content">
+                    <h1 class="page-title">Reviewing</h1>
+                    <div class="cards-grid" id="reviewingContainer"></div>
+                </div>
+            </div>
+
             
             <!-- News Page -->
             <div id="news" class="page">
@@ -394,6 +408,7 @@
     <script src="assets/people.js"></script>
     <script src="assets/projects-grants.js"></script>
     <script src="assets/code-demos.js"></script>
+    <script src="assets/reviewing.js"></script>
     <script>
         // Page Navigation
         function showPage(pageId) {
@@ -407,7 +422,17 @@
             // Update active nav link
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
-            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+            const activeLink = document.querySelector(`[data-page="${pageId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            const servicesNavGroup = document.getElementById('servicesNavGroup');
+            const servicesToggle = document.getElementById('servicesToggle');
+            if (servicesNavGroup && servicesToggle) {
+                const isServicesPage = pageId === 'reviewing';
+                servicesNavGroup.classList.toggle('open', isServicesPage);
+                servicesToggle.classList.toggle('active', isServicesPage);
+                servicesToggle.setAttribute('aria-expanded', isServicesPage ? 'true' : 'false');
+            }
 
             // Update URL hash without closing the sidebar
             if (window.location.hash !== `#${pageId}`) {
@@ -425,6 +450,17 @@
                 showPage(this.getAttribute('data-page'));
             });
         });
+
+        // Services submenu toggle
+        const servicesToggle = document.getElementById('servicesToggle');
+        const servicesNavGroup = document.getElementById('servicesNavGroup');
+        if (servicesToggle && servicesNavGroup) {
+            servicesToggle.addEventListener('click', function() {
+                const willOpen = !servicesNavGroup.classList.contains('open');
+                servicesNavGroup.classList.toggle('open', willOpen);
+                servicesToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+            });
+        }
 
         // Theme Toggle
         let isDarkMode = localStorage.getItem('darkMode') === 'true';
