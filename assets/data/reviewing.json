@@ -1,8 +1,13 @@
 [
     {
-        "Journal": "City and Environment Interactions",
+        "Journal": "Information Processing in Agriculture",
         "Publisher": "Elsevier",
-        "Link": "https://www.sciencedirect.com/journal/city-and-environment-interactions"
+        "Link": "https://www.sciencedirect.com/journal/information-processing-in-agriculture"
+    },
+    {
+        "Journal": "Expert Systems With Applications",
+        "Publisher": "Elsevier",
+        "Link": "https://www.sciencedirect.com/journal/expert-systems-with-applications"
     },
     {
         "Journal": "Journal of Hydrology",
@@ -10,19 +15,19 @@
         "Link": "https://www.sciencedirect.com/journal/journal-of-hydrology"
     },
     {
-        "Journal": "Information Processing in Agriculture",
+        "Journal": "City and Environment Interactions",
         "Publisher": "Elsevier",
-        "Link": "https://www.sciencedirect.com/journal/information-processing-in-agriculture"
+        "Link": "https://www.sciencedirect.com/journal/city-and-environment-interactions"
+    },
+    {
+        "Journal": "Smart Agricultural Technology",
+        "Publisher": "Elsevier",
+        "Link": "https://www.sciencedirect.com/journal/smart-agricultural-technology"
     },
     {
         "Journal": "Geo-spatial Information Science",
         "Publisher": "Taylor and Francis",
         "Link": "https://www.tandfonline.com/journals/tgsi20"
-    },
-    {
-        "Journal": "Expert Systems With Applications",
-        "Publisher": "Elsevier",
-        "Link": "https://www.sciencedirect.com/journal/expert-systems-with-applications"
     },
     {
         "Journal": "Climatic Change",
@@ -38,11 +43,6 @@
         "Journal": "PeerJ",
         "Publisher": "Computer Science",
         "Link": "https://peerj.com/computer-science/"
-    },
-    {
-        "Journal": "Smart Agricultural Technology",
-        "Publisher": "Elsevier",
-        "Link": "https://www.sciencedirect.com/journal/smart-agricultural-technology"
     },
     {
         "Journal": "Cogent Food & Agriculture",
