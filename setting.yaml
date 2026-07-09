@@ -1,5 +1,5 @@
 # Site display mode: "normal", "celebrations", or "7idad"
-mode: celebrations
+mode: normal
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3
