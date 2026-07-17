@@ -121,19 +121,12 @@
         return items[Math.floor(Math.random() * items.length)];
     }
 
-    function isFridayAnywhereOnEarth(now = new Date()) {
-        for (let offsetMinutes = -12 * 60; offsetMinutes <= 14 * 60; offsetMinutes += 15) {
-            const shifted = new Date(now.getTime() + (offsetMinutes * 60 * 1000));
-            if (shifted.getUTCDay() === 5) {
-                return true;
-            }
-        }
-
-        return false;
+    function isFridayLocalTime(now = new Date()) {
+        return now.getDay() === 5;
     }
 
     function resolveAudioSelection(settings) {
-        const genre = isFridayAnywhereOnEarth() ? 'anachid' : settings.genre;
+        const genre = isFridayLocalTime() ? 'anachid' : settings.genre;
 
         if (genre === 'no') {
             return { enabled: false, genre, src: '' };

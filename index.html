@@ -628,8 +628,8 @@
             function startPlayback() {
                 // Muted autoplay is the only reliable way to start audio automatically.
                 audio.muted = true;
+                audio.load();
                 audio.play().then(() => {
-                    audio.muted = false;
                     updateBtn();
                 }).catch(() => {
                     updateBtn();

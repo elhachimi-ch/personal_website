@@ -1,7 +1,7 @@
 # Site display mode: "normal", "celebrations", or "7idad"
 mode: normal
 
-# Audio genre for non-Friday days: "anachid", "chaabi_fez", "modern_morocco", "classic_morocco", "ta9to9a", "tarab", "3ayta", or "no"
+# Audio genre folder for non-Friday days: "anachid", "chaabi_fez", "modern_morocco", "classic_morocco", "ta9to9a", "tarab", "3ayta", or "no". The site picks a random audio file from assets/media/audio/<genre>/.
 genre: classic_morocco
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
