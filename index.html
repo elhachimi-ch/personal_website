@@ -403,7 +403,6 @@
     <audio id="siteAudio" preload="auto" autoplay loop playsinline></audio>
     <button id="audioToggleBtn" class="audio-toggle-btn" type="button" aria-label="Pause audio" title="Pause audio">⏸</button>
     <script src="assets/mode-effects.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="assets/publications.js"></script>
     <script src="assets/people.js"></script>
     <script src="assets/projects-grants.js"></script>
@@ -611,31 +610,35 @@
                 function unmuteOnGesture() {
                     audio.muted = false;
                     if (audio.paused) {
-                        audio.load();
                         audio.play().catch(() => {});
                     }
                     updateBtn();
+                    document.removeEventListener('click', unmuteOnGesture);
+                    document.removeEventListener('keydown', unmuteOnGesture);
+                    document.removeEventListener('touchstart', unmuteOnGesture);
+                    document.removeEventListener('scroll', unmuteOnGesture);
+                    document.removeEventListener('mousemove', unmuteOnGesture);
                 }
 
-                if (typeof window.jQuery === 'function') {
-                    window.jQuery(document).one('click keydown touchstart scroll', unmuteOnGesture);
-                } else {
-                    document.addEventListener('click', unmuteOnGesture, { once: true });
-                    document.addEventListener('keydown', unmuteOnGesture, { once: true });
-                    document.addEventListener('touchstart', unmuteOnGesture, { once: true });
-                    document.addEventListener('scroll', unmuteOnGesture, { once: true });
-                }
+                document.addEventListener('click', unmuteOnGesture, { once: true });
+                document.addEventListener('keydown', unmuteOnGesture, { once: true });
+                document.addEventListener('touchstart', unmuteOnGesture, { once: true });
+                document.addEventListener('scroll', unmuteOnGesture, { once: true });
+                document.addEventListener('mousemove', unmuteOnGesture, { once: true });
             }
 
             function startPlayback() {
-                audio.muted = false;
-                audio.load();
+                // Step 1: muted autoplay is guaranteed by all browsers.
+                audio.muted = true;
                 audio.play().then(() => {
+                    // Step 2: immediately try to unmute.
+                    audio.muted = false;
                     updateBtn();
                 }).catch(() => {
                     updateBtn();
                 });
 
+                // Step 3: if still muted/paused, unmute on first user gesture.
                 bindUnmuteOnGesture();
             }
 
