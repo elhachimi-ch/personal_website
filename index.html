@@ -400,8 +400,7 @@
 
         </main>
     </div>
-    <!-- <audio id="siteAudio" src="assets/media/audio/dami_bnthoucine.mp3" preload="auto" autoplay loop playsinline muted></audio> -->
-    <audio id="siteAudio" src="assets/media/audio/maghribi_classic_yemkn_fayetli_cheftk_ossama.mp3" preload="auto" autoplay loop playsinline muted></audio>
+    <audio id="siteAudio" preload="auto" autoplay loop playsinline muted></audio>
     <button id="audioToggleBtn" class="audio-toggle-btn" type="button" aria-label="Pause audio" title="Pause audio">⏸</button>
     <script src="assets/mode-effects.js"></script>
     <script src="assets/publications.js"></script>
@@ -590,6 +589,8 @@
             const audioBtn = document.getElementById('audioToggleBtn');
             if (!audio || !audioBtn) return;
 
+            let gestureListenersBound = false;
+
             function updateBtn() {
                 if (audio.paused) {
                     audioBtn.textContent = '▶';
@@ -602,32 +603,56 @@
                 }
             }
 
-            // Step 1: muted autoplay is guaranteed by all browsers.
-            audio.muted = true;
-            audio.play().then(() => {
-                // Step 2: immediately try to unmute — works in many browsers.
-                audio.muted = false;
-                updateBtn();
-            }).catch(() => {
-                updateBtn();
-            });
+            function bindUnmuteOnGesture() {
+                if (gestureListenersBound) return;
+                gestureListenersBound = true;
 
-            // Step 3: if still muted or paused after autoplay, unmute on first user gesture.
-            function unmuteOnGesture() {
-                audio.muted = false;
-                if (audio.paused) {
-                    audio.play().catch(() => {});
+                function unmuteOnGesture() {
+                    audio.muted = false;
+                    if (audio.paused) {
+                        audio.play().catch(() => {});
+                    }
+                    updateBtn();
+                    document.removeEventListener('click', unmuteOnGesture);
+                    document.removeEventListener('keydown', unmuteOnGesture);
+                    document.removeEventListener('touchstart', unmuteOnGesture);
+                    document.removeEventListener('scroll', unmuteOnGesture);
                 }
-                updateBtn();
-                document.removeEventListener('click', unmuteOnGesture);
-                document.removeEventListener('keydown', unmuteOnGesture);
-                document.removeEventListener('touchstart', unmuteOnGesture);
-                document.removeEventListener('scroll', unmuteOnGesture);
+
+                document.addEventListener('click', unmuteOnGesture, { once: true });
+                document.addEventListener('keydown', unmuteOnGesture, { once: true });
+                document.addEventListener('touchstart', unmuteOnGesture, { once: true });
+                document.addEventListener('scroll', unmuteOnGesture, { once: true });
             }
-            document.addEventListener('click', unmuteOnGesture, { once: true });
-            document.addEventListener('keydown', unmuteOnGesture, { once: true });
-            document.addEventListener('touchstart', unmuteOnGesture, { once: true });
-            document.addEventListener('scroll', unmuteOnGesture, { once: true });
+
+            function startPlayback() {
+                // Muted autoplay is the only reliable way to start audio automatically.
+                audio.muted = true;
+                audio.play().then(() => {
+                    audio.muted = false;
+                    updateBtn();
+                }).catch(() => {
+                    updateBtn();
+                });
+
+                bindUnmuteOnGesture();
+            }
+
+            audioBtn.hidden = true;
+
+            document.addEventListener('siteaudio:config', (event) => {
+                const selection = event.detail || {};
+
+                if (!selection.enabled) {
+                    audio.pause();
+                    audioBtn.hidden = true;
+                    updateBtn();
+                    return;
+                }
+
+                audioBtn.hidden = false;
+                startPlayback();
+            });
 
             // Toggle button: play/pause
             audioBtn.addEventListener('click', (e) => {
