@@ -4,6 +4,9 @@ mode: normal
 # Audio genre folder for non-Friday days: "anachid", "chaabi_fez", "modern_morocco", "classic_morocco", "ta9to9a", "tarab", "3ayta", or "no". The site picks a random audio file from assets/media/audio/<genre>/.
 genre: classic_morocco
 
+# Exact audio file to play. Leave empty to keep the current random selection by genre, for example: assets/media/audio/classic_morocco/nostalgie_ngoulek.mp3
+audio_path: "\assets\media\audio\3ayta\3ayta_jalini_bent_lhoucine.mp3"
+
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3
 

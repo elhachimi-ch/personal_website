@@ -2,6 +2,7 @@
     const DEFAULT_SETTINGS = {
         mode: 'normal',
         genre: 'no',
+        audio_path: '',
         animation_automation_time_interval: 3,
         celebration_when_click: false
     };
@@ -87,6 +88,8 @@
                 settings.mode = value.toLowerCase();
             } else if (key === 'genre') {
                 settings.genre = value.toLowerCase();
+            } else if (key === 'audio_path') {
+                settings.audio_path = value;
             } else if (key === 'animation_automation_time_interval') {
                 const parsed = Number(value);
                 if (Number.isFinite(parsed) && parsed > 0) {
@@ -126,6 +129,14 @@
     }
 
     function resolveAudioSelection(settings) {
+        if (settings.audio_path) {
+            return {
+                enabled: true,
+                genre: 'custom',
+                src: settings.audio_path
+            };
+        }
+
         const genre = isFridayLocalTime() ? 'anachid' : settings.genre;
 
         if (genre === 'no') {
