@@ -128,16 +128,38 @@
         return now.getDay() === 5;
     }
 
+    function normalizeAudioPath(audioPath) {
+        if (typeof audioPath !== 'string') {
+            return '';
+        }
+
+        return audioPath.trim();
+    }
+
     function resolveAudioSelection(settings) {
-        if (settings.audio_path) {
+        if (isFridayLocalTime()) {
+            const fridayTrack = pickRandom(AUDIO_LIBRARY.anachid);
+            if (!fridayTrack) {
+                return { enabled: false, genre: 'anachid', src: '' };
+            }
+
             return {
                 enabled: true,
-                genre: 'custom',
-                src: settings.audio_path
+                genre: 'anachid',
+                src: `assets/media/audio/anachid/${fridayTrack}`
             };
         }
 
-        const genre = isFridayLocalTime() ? 'anachid' : settings.genre;
+        const customAudioPath = normalizeAudioPath(settings.audio_path);
+        if (customAudioPath) {
+            return {
+                enabled: true,
+                genre: 'custom',
+                src: customAudioPath
+            };
+        }
+
+        const genre = settings.genre;
 
         if (genre === 'no') {
             return { enabled: false, genre, src: '' };
@@ -215,9 +237,16 @@
         let settings = { ...DEFAULT_SETTINGS };
 
         try {
-            const response = await fetch('setting.yaml');
-            if (response.ok) {
+            const settingPaths = ['setting.yaml', './setting.yaml', '/setting.yaml', '../setting.yaml'];
+
+            for (const path of settingPaths) {
+                const response = await fetch(path);
+                if (!response.ok) {
+                    continue;
+                }
+
                 settings = parseSettingYaml(await response.text());
+                break;
             }
         } catch (error) {
             console.warn('Could not load setting.yaml; using defaults.', error);
