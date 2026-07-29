@@ -15,6 +15,11 @@
         "Link": "https://www.sciencedirect.com/journal/journal-of-hydrology"
     },
     {
+        "Journal": "Agricultural Water Management",
+        "Publisher": "Elsevier",
+        "Link": "https://www.sciencedirect.com/journal/agricultural-water-management"
+    },
+    {
         "Journal": "City and Environment Interactions",
         "Publisher": "Elsevier",
         "Link": "https://www.sciencedirect.com/journal/city-and-environment-interactions"
@@ -58,5 +63,21 @@
         "Journal": "Euro-Mediterranean journal for environmental integration",
         "Publisher": "Springer",
         "Link": "https://link.springer.com/journal/41207"
+    },
+    {
+        "Journal": "Environmental Monitoring and Assessment",
+        "Publisher": "Springer",
+        "Link": "https://link.springer.com/journal/10661"
+    },
+    {
+        "Journal": "Environmental Science and Pollution Research",
+        "Publisher": "Springer",
+        "Link": "https://link.springer.com/journal/11356"
+    },
+    {
+        "Journal": "Scientific Reports",
+        "Publisher": "Springer",
+        "Link": "https://link.springer.com/journal/41598"
     }
+
 ]
