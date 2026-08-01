@@ -78,6 +78,17 @@
         "Journal": "Scientific Reports",
         "Publisher": "Springer",
         "Link": "https://link.springer.com/journal/41598"
+    },
+    {
+        "Journal": "Hydrological Sciences Journal",
+        "Publisher": "Taylor & Francis",
+        "Link": "https://www.tandfonline.com/journals/THSC20"
+    },
+    {
+        "Journal": "Atmosphere",
+        "Publisher": "MDPI",
+        "Link": "https://www.mdpi.com/journal/atmosphere"
     }
+
 
 ]
