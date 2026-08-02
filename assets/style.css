@@ -39,6 +39,17 @@ body.dark-mode {
     --secondary: #374151;
 }
 
+/* Keep hyperlink states readable in dark mode, including visited/clicked links. */
+body.dark-mode a,
+body.dark-mode a:link,
+body.dark-mode a:visited,
+body.dark-mode a:hover,
+body.dark-mode a:active,
+body.dark-mode a:focus,
+body.dark-mode a:focus-visible {
+    color: #FFFFFF;
+}
+
 body {
     font-family: 'candara', sans-serif;
     background-color: var(--background);
