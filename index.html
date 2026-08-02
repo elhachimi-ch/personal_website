@@ -40,7 +40,6 @@
                             <li class="nav-subitem"><a href="#reviewing" class="nav-link nav-sublink" data-page="reviewing">Reviewing</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a href="#news" class="nav-link" data-page="news">News</a></li>
                 </ul>
             </nav>
 
@@ -91,14 +90,13 @@
 
                 <div class="highlights">
                     <div style="max-width: 1024px; margin: 0 auto;">
-                        <h2 style="font-size: 28px; font-weight: bold; margin-bottom: 32px; color: var(--text-dark);">Research Highlights</h2>
+                        <h2 style="font-size: 28px; font-weight: bold; margin-bottom: 20px; color: var(--text-dark);">Research Highlights</h2>
                         <div class="highlights-grid">
                             <div class="highlight-card" id="highlight-publications">
                                 <div class="highlight-number" id="highlight-publications-number">0+</div>
                                 <div class="highlight-label">Publications</div>
                                 <div class="highlight-desc">Peer-reviewed journal papers and conference proceedings</div>
                             </div>
-
 
                             <!-- Grants section temporarily removed 
                             <div class="highlight-card">
@@ -107,46 +105,34 @@
                                 <div class="highlight-desc">Recognition and honors for research excellence</div>
                             </div>
                             -->
-                            
-                            
+
                             <div class="highlight-card" id="highlight-collaborators">
                                 <div class="highlight-number" id="highlight-collaborators-number">0+</div>
                                 <div class="highlight-label">Collaborators</div>
                                 <div class="highlight-desc">Working with leading researchers worldwide</div>
                             </div>
                         </div>
+
+                        <div class="news-table-card">
+                            <h3 class="news-table-title">Recent News</h3>
+                            <div class="news-table-wrapper">
+                                <table class="news-table" id="newsTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Event</th>
+                                            <th scope="col">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
 
-                <!-- Explore section cards 
-
-                <div class="page-content">
-                    <h2 style="font-size: 28px; font-weight: bold; margin-bottom: 32px; color: var(--text-dark);">Explore</h2>
-                    <div class="explore-grid">
-                        <div class="explore-card" data-page="news">
-                            <h3>Latest News</h3>
-                            <p>Recent updates, announcements, and research highlights</p>
-                        </div>
-                        <div class="explore-card" data-page="publications">
-                            <h3>Publications</h3>
-                            <p>Complete list of research papers and articles</p>
-                        </div>
-                        <div class="explore-card" data-page="projects">
-                            <h3>Projects & Grants</h3>
-                            <p>Research projects and funded grants</p>
-                        </div>
-                        <div class="explore-card" data-page="awards">
-                            <h3>Honors & Awards</h3>
-                            <p>Recognition and achievements in research</p>
-                        </div>
-                        <div class="explore-card" data-page="people">
-                            <h3>Collaborators</h3>
-                            <p>Meet the team and research collaborators</p>
-                        </div>
-                    </div>
-                </div>
-                -->
+              
 
             </div>
 
@@ -409,6 +395,49 @@
     <script src="assets/code-demos.js"></script>
     <script src="assets/reviewing.js"></script>
     <script>
+        (function() {
+            const tableBody = document.querySelector('#newsTable tbody');
+            if (!tableBody) return;
+
+            async function loadNews() {
+                try {
+                    const res = await fetch('assets/data/news.json');
+                    if (!res.ok) throw new Error('Failed to load news.json');
+                    const rows = await res.json();
+                    if (!Array.isArray(rows) || !rows.length) {
+                        tableBody.innerHTML = '<tr><td colspan="3" class="news-table-empty">No news available.</td></tr>';
+                        return;
+                    }
+
+                    tableBody.innerHTML = rows.map(item => {
+                        const roleText = (item.role || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const eventText = (item.event || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const dateText = (item.date || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const roleCell = item.link
+                            ? `<a href="${String(item.link).replace(/"/g, '&quot;')}" target="_blank" rel="noopener noreferrer">${roleText}</a>`
+                            : roleText;
+
+                        return `
+                            <tr>
+                                <td>${roleCell}</td>
+                                <td>${eventText}</td>
+                                <td>${dateText}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                } catch (err) {
+                    tableBody.innerHTML = '<tr><td colspan="3" class="news-table-empty">Failed to load news.</td></tr>';
+                    console.error(err);
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadNews);
+            } else {
+                loadNews();
+            }
+        })();
+
         // Page Navigation
         function showPage(pageId) {
             // Hide all pages
