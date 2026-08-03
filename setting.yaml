@@ -1,11 +1,12 @@
 # Site display mode: "normal", "celebrations", or "7idad"
 mode: normal
 
-# Audio genre folder for non-Friday days: "anachid", "chaabi_fez", "modern_morocco", "classic_morocco", "ta9to9a", "tarab", "3ayta", or "no". The site picks a random audio file from assets/media/audio/<genre>/.
-genre: chinese
+# Audio genre folder for non-Friday days. Use any folder name under assets/media/audio/, or "no" to disable audio. The site picks a random audio file from assets/media/audio/<genre>/.
+genre: tamazight
 
 # Exact audio file to play. Leave empty to keep the current random selection by genre, for example: assets/media/audio/classic_morocco/nostalgie_ngoulek.mp3
 # audio_path: "assets/media/audio/ta9to9a/jabala_alala_wmaali.mp3"
+# audio_path: ""
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3

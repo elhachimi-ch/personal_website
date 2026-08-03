@@ -15,6 +15,8 @@
     }
 
     const VALID_MODES = new Set(['normal', 'celebrations', '7idad']);
+    const AUDIO_ROOT = 'assets/media/audio';
+    const AUDIO_FILE_PATTERN = /\.(mp3|m4a|wav|ogg|aac|flac)$/i;
     const AUDIO_LIBRARY = {
         anachid: [
             'anachid_madih_sama3_borda.mp3',
@@ -68,7 +70,8 @@
             'swakn_talab_ya_lf9ih.m4a'
         ]
     };
-    const VALID_GENRES = new Set([...Object.keys(AUDIO_LIBRARY), 'no']);
+    let discoveredGenreMapPromise = null;
+    const discoveredTracksByGenre = new Map();
 
     function parseSettingYaml(text) {
         const settings = { ...DEFAULT_SETTINGS };
@@ -136,9 +139,148 @@
         return audioPath.trim();
     }
 
-    function resolveAudioSelection(settings) {
+    function getFallbackGenreMap() {
+        const map = new Map();
+        for (const genre of Object.keys(AUDIO_LIBRARY)) {
+            map.set(genre.toLowerCase(), genre);
+        }
+
+        return map;
+    }
+
+    function listDirectoryEntries(html, directoryPath) {
+        const folders = new Set();
+        const files = new Set();
+
+        try {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const baseUrl = new URL(directoryPath.endsWith('/') ? directoryPath : `${directoryPath}/`, window.location.href);
+
+            for (const link of doc.querySelectorAll('a[href]')) {
+                const href = link.getAttribute('href');
+                if (!href || href === '.' || href === '..' || href === './' || href === '../') {
+                    continue;
+                }
+
+                let resolved;
+                try {
+                    resolved = new URL(href, baseUrl);
+                } catch {
+                    continue;
+                }
+
+                if (resolved.origin !== baseUrl.origin || !resolved.pathname.startsWith(baseUrl.pathname)) {
+                    continue;
+                }
+
+                const relativePath = decodeURIComponent(resolved.pathname.slice(baseUrl.pathname.length));
+                if (!relativePath || relativePath.startsWith('../')) {
+                    continue;
+                }
+
+                const normalizedRelativePath = relativePath.replace(/^\/+/, '');
+                if (!normalizedRelativePath) {
+                    continue;
+                }
+
+                if (normalizedRelativePath.endsWith('/')) {
+                    const folderName = normalizedRelativePath.slice(0, -1);
+                    if (folderName && !folderName.includes('/')) {
+                        folders.add(folderName);
+                    }
+                    continue;
+                }
+
+                if (normalizedRelativePath.includes('/')) {
+                    continue;
+                }
+
+                if (!normalizedRelativePath.includes('.')) {
+                    folders.add(normalizedRelativePath);
+                } else {
+                    files.add(normalizedRelativePath);
+                }
+            }
+        } catch {
+            return {
+                folders: [],
+                files: []
+            };
+        }
+
+        return {
+            folders: [...folders],
+            files: [...files]
+        };
+    }
+
+    async function fetchDirectoryEntries(directoryPath) {
+        const response = await fetch(directoryPath.endsWith('/') ? directoryPath : `${directoryPath}/`);
+        if (!response.ok) {
+            throw new Error(`Could not read directory ${directoryPath}`);
+        }
+
+        const html = await response.text();
+        return listDirectoryEntries(html, directoryPath);
+    }
+
+    async function getAvailableGenreMap() {
+        if (!discoveredGenreMapPromise) {
+            discoveredGenreMapPromise = (async () => {
+                try {
+                    const { folders } = await fetchDirectoryEntries(AUDIO_ROOT);
+                    const map = new Map();
+                    for (const folderName of folders) {
+                        map.set(folderName.toLowerCase(), folderName);
+                    }
+
+                    if (map.size > 0) {
+                        return map;
+                    }
+                } catch {
+                    // Fall back to static audio library when directory listing is unavailable.
+                }
+
+                return getFallbackGenreMap();
+            })();
+        }
+
+        return discoveredGenreMapPromise;
+    }
+
+    function getFallbackTracks(genre) {
+        const key = String(genre || '').toLowerCase();
+        return AUDIO_LIBRARY[key] || [];
+    }
+
+    async function getGenreTracks(genre) {
+        if (discoveredTracksByGenre.has(genre)) {
+            return discoveredTracksByGenre.get(genre);
+        }
+
+        const tracksPromise = (async () => {
+            try {
+                const { files } = await fetchDirectoryEntries(`${AUDIO_ROOT}/${encodeURIComponent(genre)}`);
+                const audioFiles = files.filter((fileName) => AUDIO_FILE_PATTERN.test(fileName));
+                if (audioFiles.length > 0) {
+                    return audioFiles;
+                }
+            } catch {
+                // Fall back to static audio library when folder listing is unavailable.
+            }
+
+            return getFallbackTracks(genre);
+        })();
+
+        discoveredTracksByGenre.set(genre, tracksPromise);
+        return tracksPromise;
+    }
+
+    async function resolveAudioSelection(settings, availableGenreMap) {
         if (isFridayLocalTime()) {
-            const fridayTrack = pickRandom(AUDIO_LIBRARY.anachid);
+            const fridayGenre = availableGenreMap.get('anachid') || 'anachid';
+            const fridayTrack = pickRandom(await getGenreTracks(fridayGenre));
             if (!fridayTrack) {
                 return { enabled: false, genre: 'anachid', src: '' };
             }
@@ -146,7 +288,7 @@
             return {
                 enabled: true,
                 genre: 'anachid',
-                src: `assets/media/audio/anachid/${fridayTrack}`
+                src: `${AUDIO_ROOT}/${fridayGenre}/${fridayTrack}`
             };
         }
 
@@ -165,7 +307,8 @@
             return { enabled: false, genre, src: '' };
         }
 
-        const track = pickRandom(AUDIO_LIBRARY[genre]);
+        const resolvedGenre = availableGenreMap.get(genre) || genre;
+        const track = pickRandom(await getGenreTracks(resolvedGenre));
         if (!track) {
             return { enabled: false, genre, src: '' };
         }
@@ -173,7 +316,7 @@
         return {
             enabled: true,
             genre,
-            src: `assets/media/audio/${genre}/${track}`
+            src: `${AUDIO_ROOT}/${resolvedGenre}/${track}`
         };
     }
 
@@ -257,12 +400,14 @@
             settings.mode = 'normal';
         }
 
-        if (!VALID_GENRES.has(settings.genre)) {
+        const availableGenreMap = await getAvailableGenreMap();
+
+        if (settings.genre !== 'no' && !availableGenreMap.has(settings.genre)) {
             console.warn(`Unknown genre "${settings.genre}"; falling back to no audio.`);
             settings.genre = 'no';
         }
 
-        applyAudioSelection(resolveAudioSelection(settings));
+        applyAudioSelection(await resolveAudioSelection(settings, availableGenreMap));
 
         if (settings.mode === 'celebrations') {
             try {
