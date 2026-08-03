@@ -39,6 +39,17 @@ body.dark-mode {
     --secondary: #374151;
 }
 
+/* Keep hyperlink states readable in dark mode, including visited/clicked links. */
+body.dark-mode a,
+body.dark-mode a:link,
+body.dark-mode a:visited,
+body.dark-mode a:hover,
+body.dark-mode a:active,
+body.dark-mode a:focus,
+body.dark-mode a:focus-visible {
+    color: #FFFFFF;
+}
+
 body {
     font-family: 'candara', sans-serif;
     background-color: var(--background);
@@ -301,7 +312,7 @@ body {
 /* People section: justify names and avoid flex alignment issues */
 
 .hero {
-    padding: 2em 32px;
+    padding: 1.25em 32px 0.75em;
     max-width: 1024px;
     margin: 0 auto;
 }
@@ -310,29 +321,29 @@ body {
     font-size: 75px;
     font-weight: bold;
     font-family: 'candara', sans-serif;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     color: var(--text-dark);
 }
 
 .hero-subtitle {
     font-size: 27px;
     color: var(--text-light);
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     font-weight: 500;
 }
 
 .hero-text {
     font-size: 21px;
     color: var(--text-dark);
-    line-height: 1.8;
-    margin-bottom: 24px;
+    line-height: 1.6;
+    margin-bottom: 16px;
     text-align: justify;
 }
 
 .cta-buttons {
     display: flex;
-    gap: 16px;
-    margin-top: 32px;
+    gap: 12px;
+    margin-top: 16px;
     flex-wrap: wrap;
 }
 
@@ -372,42 +383,94 @@ body {
 /* Highlights Section */
 .highlights {
     background-color: var(--secondary);
-    padding: 48px 32px;
-    margin-top: 48px;
+    padding: 24px 32px 28px;
+    margin-top: 20px;
 }
 
 .highlights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
     max-width: 1024px;
-    margin: 0 auto;
+    margin: 0 auto 18px;
 }
 
 .highlight-card {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: 18px 20px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     text-align: center;
 }
 
 .highlight-number {
-    font-size: 39px;
+    font-size: 32px;
     font-weight: bold;
     color: var(--primary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .highlight-label {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .highlight-desc {
-    font-size: 17px;
+    font-size: 15px;
     color: var(--text-light);
+}
+
+.news-table-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 18px 20px;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.news-table-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+.news-table-wrapper {
+    overflow-x: auto;
+}
+
+.news-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.news-table th,
+.news-table td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+}
+
+.news-table th {
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px;
+}
+
+.news-table td:first-child {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.news-table-empty {
+    color: var(--text-light);
+    text-align: center;
 }
 
 /* Explore Grid */
