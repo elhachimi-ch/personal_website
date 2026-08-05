@@ -6,7 +6,7 @@ genre: classic_morocco
 
 # Exact audio file to play. Leave empty to keep the current random selection by genre, for example: assets/media/audio/classic_morocco/nostalgie_ngoulek.mp3
 # audio_path: "assets/media/audio/ta9to9a/jabala_alala_wmaali.mp3"
-# audio_path: ""
+audio_path: "assets/media/audio/cha3bi_3roubi/rkbat_lkhayl_jdidi.mp3"
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3
