@@ -34,6 +34,11 @@
         cha3bi_3roubi: [
             'rkbat_lkhayl_jdidi.mp3',
         ],
+        mousem_fantasy: [
+            'rkbat_lkhayl_jdidi.mp3',
+            '3ayta_kebet_elkhayl_safi.mp3',
+            '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
+        ],
         modern_morocco: [
             'hassani.mp3',
             'maalich_dystinct.mp3'
