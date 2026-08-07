@@ -38,6 +38,15 @@
             'rkbat_lkhayl_jdidi.mp3',
             '3ayta_kebet_elkhayl_safi.mp3',
             '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
+            'lkhayl_3awniat.mp3',
+            'lkhayl_rahmani.mp3',
+
+        ],
+        '3awniat': [
+            '3awniat_9arab_yawlidi.mp3',
+            '3awniat_9arab_yawlidi.mp3',
+            '3awniat_fallah.mp3',
+            '3awniyat.mp3',
         ],
         modern_morocco: [
             'hassani.mp3',
