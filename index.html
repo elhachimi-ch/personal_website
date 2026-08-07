@@ -491,11 +491,15 @@
         }
 
         // Theme Toggle
-        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+        function getThemeFromLocalClock(now = new Date()) {
+            const hour = now.getHours();
+            return hour < 6 || hour >= 18;
+        }
+
+        let isDarkMode = getThemeFromLocalClock();
 
         function toggleTheme() {
             isDarkMode = !isDarkMode;
-            localStorage.setItem('darkMode', isDarkMode);
             updateTheme();
         }
 
@@ -552,6 +556,11 @@
         // Initialize theme and sidebar on page load
         updateTheme();
         handleResponsiveSidebar();
+
+        setInterval(() => {
+            isDarkMode = getThemeFromLocalClock();
+            updateTheme();
+        }, 60000);
 
         // Update sidebar visibility on window resize
         window.addEventListener('resize', handleResponsiveSidebar);
