@@ -47,6 +47,7 @@
             '3awniat_9arab_yawlidi.mp3',
             '3awniat_fallah.mp3',
             '3awniyat.mp3',
+            'lkhayl_3awniat.mp3',
         ],
         modern_morocco: [
             'hassani.mp3',
