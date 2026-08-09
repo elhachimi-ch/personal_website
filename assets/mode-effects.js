@@ -28,6 +28,27 @@
         chaabi_fez: [
             'tarab_andaloussi_ya_man_malakni.mp3'
         ],
+        chinese: [
+            'chinese_festival_music_instrumental.mp3',
+        ],
+        cha3bi_3roubi: [
+            'rkbat_lkhayl_jdidi.mp3',
+        ],
+        mousem_fantasy: [
+            'rkbat_lkhayl_jdidi.mp3',
+            '3ayta_kebet_elkhayl_safi.mp3',
+            '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
+            'lkhayl_3awniat.mp3',
+            'lkhayl_rahmani.mp3',
+
+        ],
+        '3awniat': [
+            '3awniat_9arab_yawlidi.mp3',
+            '3awniat_9arab_yawlidi.mp3',
+            '3awniat_fallah.mp3',
+            '3awniyat.mp3',
+            'lkhayl_3awniat.mp3',
+        ],
         modern_morocco: [
             'hassani.mp3',
             'maalich_dystinct.mp3'
