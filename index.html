@@ -121,6 +121,7 @@
                                         <tr>
                                             <th scope="col">Role</th>
                                             <th scope="col">Event</th>
+                                            <th scope="col">Place</th>
                                             <th scope="col">Date</th>
                                         </tr>
                                     </thead>
@@ -422,21 +423,23 @@
                     if (!res.ok) throw new Error('Failed to load news.json');
                     const rows = await res.json();
                     if (!Array.isArray(rows) || !rows.length) {
-                        tableBody.innerHTML = '<tr><td colspan="3" class="news-table-empty">No news available.</td></tr>';
+                        tableBody.innerHTML = '<tr><td colspan="4" class="news-table-empty">No news available.</td></tr>';
                         return;
                     }
 
                     tableBody.innerHTML = rows.map(item => {
+                        const placeText = item.place || item.venue || '';
                         return `
                             <tr>
                                 <td>${renderCell(item.role, item.link_role)}</td>
                                 <td>${renderCell(item.event, item.link_event)}</td>
+                                <td>${escapeHtml(placeText)}</td>
                                 <td>${escapeHtml(item.date)}</td>
                             </tr>
                         `;
                     }).join('');
                 } catch (err) {
-                    tableBody.innerHTML = '<tr><td colspan="3" class="news-table-empty">Failed to load news.</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="4" class="news-table-empty">Failed to load news.</td></tr>';
                     console.error(err);
                 }
             }
