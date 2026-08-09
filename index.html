@@ -399,6 +399,23 @@
             const tableBody = document.querySelector('#newsTable tbody');
             if (!tableBody) return;
 
+            function escapeHtml(value) {
+                return String(value || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function renderCell(text, link) {
+                const safeText = escapeHtml(text);
+                if (!link) return safeText;
+
+                const safeLink = escapeHtml(link);
+                return `<a href="${safeLink}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+            }
+
             async function loadNews() {
                 try {
                     const res = await fetch('assets/data/news.json');
@@ -410,18 +427,11 @@
                     }
 
                     tableBody.innerHTML = rows.map(item => {
-                        const roleText = (item.role || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                        const eventText = (item.event || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                        const dateText = (item.date || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                        const roleCell = item.link
-                            ? `<a href="${String(item.link).replace(/"/g, '&quot;')}" target="_blank" rel="noopener noreferrer">${roleText}</a>`
-                            : roleText;
-
                         return `
                             <tr>
-                                <td>${roleCell}</td>
-                                <td>${eventText}</td>
-                                <td>${dateText}</td>
+                                <td>${renderCell(item.role, item.link_role)}</td>
+                                <td>${renderCell(item.event, item.link_event)}</td>
+                                <td>${escapeHtml(item.date)}</td>
                             </tr>
                         `;
                     }).join('');
