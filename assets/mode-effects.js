@@ -40,6 +40,7 @@
             '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
             'lkhayl_3awniat.mp3',
             'lkhayl_rahmani.mp3',
+            'moulay_abdellah_bnt_houcine.mp3',
 
         ],
         '3awniat': [
@@ -86,7 +87,8 @@
             '3ayta_swaken_taleb.mp3',
             '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
             '3ayta_wald_9addour_brawl.mp3',
-            'swakn_talab_ya_lf9ih.m4a'
+            'swakn_talab_ya_lf9ih.m4a',
+            'moulay_abdellah_bnt_houcine.mp3'
         ]
     };
     const VALID_GENRES = new Set([...Object.keys(AUDIO_LIBRARY), 'no']);
