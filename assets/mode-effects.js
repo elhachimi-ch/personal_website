@@ -68,8 +68,13 @@
         ta9to9a: [
             'ta9to9a_bin_ljbal.mp3'
         ],
+        malhoun: [
+            'malhoun_oum_marahati.mp3'
+        ],
         tarab: [
-            'tarab_sabah_fakhri_yamali_cham.m4a'
+            'tarab_sabah_fakhri_yamali_cham.m4a',
+            'tarab_eko.mp3',
+
         ],
         '3ayta': [
             '3awniyat.mp3',
