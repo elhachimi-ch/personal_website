@@ -28,6 +28,9 @@
         chaabi_fez: [
             'tarab_andaloussi_ya_man_malakni.mp3'
         ],
+        west: [
+            'latino_baiana.mp3'
+        ],
         chinese: [
             'chinese_festival_music_instrumental.mp3',
         ],
