@@ -26,7 +26,7 @@
             'anachid_ssoufi_allah_mawlana.mp3'
         ],
         chaabi_fez: [
-            'tarab_andaloussi_ya_man_malakni.mp3'
+            'choufi_mali.mp3'
         ],
         west: [
             'latino_baiana.mp3'
@@ -68,8 +68,9 @@
         ta9to9a: [
             'ta9to9a_bin_ljbal.mp3'
         ],
-        malhoun: [
-            'malhoun_oum_marahati.mp3'
+        malhoun_and_andaloussi: [
+            'malhoun_oum_marahati.mp3',
+            'tarab_andaloussi_ya_man_malakni.mp3',
         ],
         tarab: [
             'tarab_sabah_fakhri_yamali_cham.m4a',
