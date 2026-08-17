@@ -88,7 +88,13 @@
         "Journal": "Atmosphere",
         "Publisher": "MDPI",
         "Link": "https://www.mdpi.com/journal/atmosphere"
+    },
+    {
+        "Journal": "World",
+        "Publisher": "MDPI",
+        "Link": "https://www.mdpi.com/journal/world"
     }
+
 
 
 ]
