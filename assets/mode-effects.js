@@ -26,7 +26,7 @@
             'anachid_ssoufi_allah_mawlana.mp3'
         ],
         chaabi_fez: [
-            'tarab_andaloussi_ya_man_malakni.mp3'
+            'choufi_mali.mp3'
         ],
         west: [
             'latino_baiana.mp3'
@@ -68,8 +68,14 @@
         ta9to9a: [
             'ta9to9a_bin_ljbal.mp3'
         ],
+        malhoun_and_andaloussi: [
+            'malhoun_oum_marahati.mp3',
+            'tarab_andaloussi_ya_man_malakni.mp3',
+        ],
         tarab: [
-            'tarab_sabah_fakhri_yamali_cham.m4a'
+            'tarab_sabah_fakhri_yamali_cham.m4a',
+            'tarab_eko.mp3',
+
         ],
         '3ayta': [
             '3awniyat.mp3',
@@ -91,7 +97,8 @@
             '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
             '3ayta_wald_9addour_brawl.mp3',
             'swakn_talab_ya_lf9ih.m4a',
-            'moulay_abdellah_bnt_houcine.mp3'
+            'moulay_abdellah_bnt_houcine.mp3',
+            'kassi_frid_zerhouni.mp3'
         ]
     };
     const VALID_GENRES = new Set([...Object.keys(AUDIO_LIBRARY), 'no']);
