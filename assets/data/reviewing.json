@@ -93,8 +93,11 @@
         "Journal": "World",
         "Publisher": "MDPI",
         "Link": "https://www.mdpi.com/journal/world"
+    },
+    {
+        "Journal": "Ecological Informatics",
+        "Publisher": "Elsevier",
+        "Link": "https://www.sciencedirect.com/journal/ecological-informatics"
     }
-
-
 
 ]
