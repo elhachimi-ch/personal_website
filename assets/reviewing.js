@@ -47,7 +47,14 @@
       const res = await fetch('assets/data/reviewing.json');
       if (!res.ok) throw new Error('Failed to load reviewing.json');
       const items = await res.json();
-      renderItems(items);
+      const sortedItems = Array.isArray(items)
+        ? [...items].sort((a, b) => {
+            const nameA = (a && a.Journal ? String(a.Journal) : '').trim();
+            const nameB = (b && b.Journal ? String(b.Journal) : '').trim();
+            return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+          })
+        : [];
+      renderItems(sortedItems);
     } catch (err) {
       container.innerHTML = '<tr><td colspan="3" class="news-table-empty">Failed to load reviewing information.</td></tr>';
       console.error(err);
