@@ -473,6 +473,11 @@ body {
     text-align: center;
 }
 
+.reviewing-table td:last-child {
+    white-space: nowrap;
+    width: 1%;
+}
+
 /* Explore Grid */
 .explore-grid {
     display: grid;
