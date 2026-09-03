@@ -1,5 +1,15 @@
 [
   {
+    "name": "Optimal Use of Satellite Thermal Infrared Image Data for Advancing Land Surface Temperature Analysis and Mitigating Urban Heat Stress",
+    "role": "Team Member",
+    "duration": "",
+    "funding": "",
+    "collaborators": "",
+    "pi": "Prof. Qihao WENG",
+    "keywords": "Earth Observation, Land Surface Temperature, Urban Heat Stress, Artificial Intelligence"
+
+  },
+  {
     "name": "FIRMA: A Field-scale decision support platform for fertilization and IRrigation MAnagement based on remote sensing and physics-constrained machine learning models",
     "role": "Team Member",
     "duration": "3 years",
@@ -15,18 +25,8 @@
     "duration": "2022-2025",
     "funding": "",
     "collaborators": "",
-    "website": "https://geantechweb.com/",
     "pi": "Prof. Lhoussaine BOUCHAOU",
     "keywords": "Water Management, Remote Sensing, Collective Intelligence, Artificial Intelligence"
-  },
-  {
-    "name": "Optimal Use of Satellite Thermal Infrared Image Data for Advancing Land Surface Temperature Analysis and Mitigating Urban Heat Stress",
-    "role": "Team Member",
-    "duration": "",
-    "funding": "",
-    "collaborators": "",
-    "pi": "Prof. Qihao WENG",
-    "keywords": "Earth Observation, Land Surface Temperature, Urban Heat Stress, Artificial Intelligence"
-
   }
+  
 ]
