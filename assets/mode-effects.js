@@ -98,7 +98,8 @@
             '3ayta_wald_9addour_brawl.mp3',
             'swakn_talab_ya_lf9ih.m4a',
             'moulay_abdellah_bnt_houcine.mp3',
-            'kassi_frid_zerhouni.mp3'
+            'kassi_frid_zerhouni.mp3',
+            'brawl_iraqi_wtar.m4a'
         ]
     };
     const VALID_GENRES = new Set([...Object.keys(AUDIO_LIBRARY), 'no']);
