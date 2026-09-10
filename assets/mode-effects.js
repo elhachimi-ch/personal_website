@@ -2,7 +2,7 @@
     const DEFAULT_SETTINGS = {
         mode: 'normal',
         genre: 'no',
-        audio_path: '',
+        audio_name: '',
         animation_automation_time_interval: 3,
         celebration_when_click: false
     };
@@ -15,94 +15,7 @@
     }
 
     const VALID_MODES = new Set(['normal', 'celebrations', '7idad']);
-    const AUDIO_LIBRARY = {
-        anachid: [
-            'anachid_madih_sama3_borda.mp3',
-            'anachid_madih_sama3_hamzia.mp3',
-            'anachid_madih_tachawa9at.mp3',
-            'anachid_naciri_douaa.mp3',
-            'anachid_nejma_fo9ara.mp3',
-            'anachid_sama3_madih_matbo3.mp3',
-            'anachid_ssoufi_allah_mawlana.mp3'
-        ],
-        chaabi_fez: [
-            'choufi_mali.mp3'
-        ],
-        west: [
-            'latino_baiana.mp3'
-        ],
-        chinese: [
-            'chinese_festival_music_instrumental.mp3',
-        ],
-        cha3bi_3roubi: [
-            'rkbat_lkhayl_jdidi.mp3',
-        ],
-        mousem_fantasy: [
-            'rkbat_lkhayl_jdidi.mp3',
-            '3ayta_kebet_elkhayl_safi.mp3',
-            '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
-            'lkhayl_3awniat.mp3',
-            'lkhayl_rahmani.mp3',
-            'moulay_abdellah_bnt_houcine.mp3',
-
-        ],
-        '3awniat': [
-            '3awniat_9arab_yawlidi.mp3',
-            '3awniat_9arab_yawlidi.mp3',
-            '3awniat_fallah.mp3',
-            '3awniyat.mp3',
-            'lkhayl_3awniat.mp3',
-        ],
-        modern_morocco: [
-            'hassani.mp3',
-            'maalich_dystinct.mp3'
-        ],
-        classic_morocco: [
-            'bladi_ya_zin_bldan_nouaman.mp3',
-            'maghribi_classic_lghiwan_zin_mdihak.mp3',
-            'maghribi_classic_mana_ila_bachar_ahmed_alaoui_classic_morocco.mp3',
-            'maghribi_classic_yemkn_fayetli_cheftk_ossama.mp3',
-            'mana_ila_bachar_doukkali.mp3',
-            'nostalgie_ngoulek.mp3'
-        ],
-        ta9to9a: [
-            'ta9to9a_bin_ljbal.mp3'
-        ],
-        malhoun_and_andaloussi: [
-            'malhoun_oum_marahati.mp3',
-            'tarab_andaloussi_ya_man_malakni.mp3',
-        ],
-        tarab: [
-            'tarab_sabah_fakhri_yamali_cham.m4a',
-            'tarab_eko.mp3',
-
-        ],
-        '3ayta': [
-            '3awniyat.mp3',
-            '3aytat_lghzal.mp3',
-            '3ayta_alwa_bhala.mp3',
-            '3ayta_alwa_l3aydi.mp3',
-            '3ayta_alwa_La3bari.mp3',
-            '3ayta_alwa_wald_9addour.mp3',
-            '3ayta_alwa_wald_aouni.mp3',
-            '3ayta_alwa_wal_aouni.mp3',
-            '3ayta_dami_bnthoucine.mp3',
-            '3ayta_kebet_elkhayl_safi.mp3',
-            '3ayta_kharboucha.mp3',
-            '3ayta_lwad_lwad.mp3',
-            '3ayta_nejma_dahi.mp3',
-            '3ayta_nostalgie_wald_9adour.mp3',
-            '3ayta_settat_bladi_wald_aouni.mp3',
-            '3ayta_swaken_taleb.mp3',
-            '3ayta_tkbt_lkhayl_najm_chaabi.mp3',
-            '3ayta_wald_9addour_brawl.mp3',
-            'swakn_talab_ya_lf9ih.m4a',
-            'moulay_abdellah_bnt_houcine.mp3',
-            'kassi_frid_zerhouni.mp3',
-            'brawl_iraqi_wtar.m4a'
-        ]
-    };
-    const VALID_GENRES = new Set([...Object.keys(AUDIO_LIBRARY), 'no']);
+    const AUDIOS_CSV_PATHS = ['assets/data/audios.csv', './assets/data/audios.csv', '/assets/data/audios.csv', '../assets/data/audios.csv'];
 
     function parseSettingYaml(text) {
         const settings = { ...DEFAULT_SETTINGS };
@@ -122,8 +35,8 @@
                 settings.mode = value.toLowerCase();
             } else if (key === 'genre') {
                 settings.genre = value.toLowerCase();
-            } else if (key === 'audio_path') {
-                settings.audio_path = value;
+            } else if (key === 'audio_name') {
+                settings.audio_name = value;
             } else if (key === 'animation_automation_time_interval') {
                 const parsed = Number(value);
                 if (Number.isFinite(parsed) && parsed > 0) {
@@ -162,80 +75,305 @@
         return now.getDay() === 5;
     }
 
-    function normalizeAudioPath(audioPath) {
-        if (typeof audioPath !== 'string') {
+    function extractYouTubeId(link) {
+        if (typeof link !== 'string') {
             return '';
         }
 
-        return audioPath.trim();
+        const match = link.trim().match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+        return match ? match[1] : '';
     }
 
-    function resolveAudioSelection(settings) {
-        if (isFridayLocalTime()) {
-            const fridayTrack = pickRandom(AUDIO_LIBRARY.anachid);
-            if (!fridayTrack) {
-                return { enabled: false, genre: 'anachid', src: '' };
-            }
+    function parseAudiosCSV(text) {
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        if (!lines.length) return [];
 
-            return {
-                enabled: true,
-                genre: 'anachid',
-                src: `assets/media/audio/anachid/${fridayTrack}`
-            };
+        const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const columns = ['name', 'genre', 'link', 'start_time', 'end_time'].map(col => header.indexOf(col));
+        if (columns.some(index => index === -1)) {
+            console.warn('audios.csv is missing required columns (name, genre, link, start_time, end_time).');
+            return [];
         }
 
-        const customAudioPath = normalizeAudioPath(settings.audio_path);
-        if (customAudioPath) {
-            return {
-                enabled: true,
-                genre: 'custom',
-                src: customAudioPath
-            };
+        const [nameIndex, genreIndex, linkIndex, startIndex, endIndex] = columns;
+        const tracks = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const cols = lines[i].split(',');
+            const name = (cols[nameIndex] || '').trim();
+            const genre = (cols[genreIndex] || '').trim().toLowerCase();
+            const link = (cols[linkIndex] || '').trim();
+            const startRaw = (cols[startIndex] || '').trim();
+            const endRaw = (cols[endIndex] || '').trim();
+            const startTime = startRaw === '' ? 0 : Number(startRaw);
+            // Empty end_time means play through to the video's natural end.
+            const endTime = endRaw === '' ? null : Number(endRaw);
+            const videoId = extractYouTubeId(link);
+
+            if (!videoId || !Number.isFinite(startTime) || startTime < 0 || (endTime !== null && (!Number.isFinite(endTime) || endTime <= startTime))) {
+                console.warn(`Skipping invalid audios.csv row: "${lines[i]}"`);
+                continue;
+            }
+
+            tracks.push({ name, genre, link, videoId, start_time: startTime, end_time: endTime });
+        }
+
+        return tracks;
+    }
+
+    async function loadAudiosCatalog() {
+        for (const path of AUDIOS_CSV_PATHS) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) {
+                    continue;
+                }
+
+                return parseAudiosCSV(await response.text());
+            } catch (error) {
+                continue;
+            }
+        }
+
+        console.warn('Could not load assets/data/audios.csv; audio disabled.');
+        return [];
+    }
+
+    function resolveAudioSelection(settings, catalog) {
+        if (isFridayLocalTime()) {
+            const fridayTrack = pickRandom(catalog.filter(track => track.genre === 'anachid'));
+            if (!fridayTrack) {
+                return { enabled: false, genre: 'anachid' };
+            }
+
+            return { enabled: true, ...fridayTrack };
+        }
+
+        const audioName = typeof settings.audio_name === 'string' ? settings.audio_name.trim().toLowerCase() : '';
+        if (audioName) {
+            const namedTrack = catalog.find(track => track.name.toLowerCase() === audioName);
+            if (namedTrack) {
+                return { enabled: true, ...namedTrack };
+            }
+            console.warn(`No track named "${settings.audio_name}" found in audios.csv.`);
         }
 
         const genre = settings.genre;
-
         if (genre === 'no') {
-            return { enabled: false, genre, src: '' };
+            return { enabled: false, genre };
         }
 
-        const track = pickRandom(AUDIO_LIBRARY[genre]);
+        const track = pickRandom(catalog.filter(t => t.genre === genre));
         if (!track) {
-            return { enabled: false, genre, src: '' };
+            return { enabled: false, genre };
         }
 
-        return {
-            enabled: true,
-            genre,
-            src: `assets/media/audio/${genre}/${track}`
-        };
+        return { enabled: true, ...track };
     }
 
-    function applyAudioSelection(selection) {
-        const audio = document.getElementById('siteAudio');
+    let ytApiPromise = null;
+
+    function ensureYouTubeApiLoaded() {
+        if (window.YT && window.YT.Player) {
+            return Promise.resolve();
+        }
+
+        if (!ytApiPromise) {
+            ytApiPromise = new Promise((resolve) => {
+                const previousCallback = window.onYouTubeIframeAPIReady;
+                window.onYouTubeIframeAPIReady = () => {
+                    if (typeof previousCallback === 'function') previousCallback();
+                    resolve();
+                };
+                loadScript('https://www.youtube.com/iframe_api').catch(() => resolve());
+            });
+        }
+
+        return ytApiPromise;
+    }
+
+    const audioController = {
+        player: null,
+        selection: null,
+        loopIntervalId: null,
+        gestureListenersBound: false,
+        buttonBound: false,
+        visibilityBound: false,
+        shouldBePlaying: false
+    };
+
+    function updateAudioBtn() {
+        const audioBtn = document.getElementById('audioToggleBtn');
+        const player = audioController.player;
+        if (!audioBtn || !player || typeof player.getPlayerState !== 'function') return;
+
+        const isPlaying = player.getPlayerState() === YT.PlayerState.PLAYING;
+        const isMuted = player.isMuted();
+
+        if (!isPlaying) {
+            audioBtn.textContent = '▶';
+            audioBtn.setAttribute('aria-label', 'Play audio');
+            audioBtn.title = 'Play audio';
+        } else {
+            audioBtn.textContent = isMuted ? '🔇' : '⏸';
+            audioBtn.setAttribute('aria-label', isMuted ? 'Unmute audio' : 'Pause audio');
+            audioBtn.title = isMuted ? 'Unmute audio' : 'Pause audio';
+        }
+    }
+
+    function bindUnmuteOnGesture() {
+        if (audioController.gestureListenersBound) return;
+        audioController.gestureListenersBound = true;
+
+        function unmuteOnGesture() {
+            const player = audioController.player;
+            if (player) {
+                player.unMute();
+                if (audioController.shouldBePlaying && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.playVideo();
+                }
+            }
+            updateAudioBtn();
+            document.removeEventListener('click', unmuteOnGesture);
+            document.removeEventListener('keydown', unmuteOnGesture);
+            document.removeEventListener('touchstart', unmuteOnGesture);
+            document.removeEventListener('scroll', unmuteOnGesture);
+            document.removeEventListener('mousemove', unmuteOnGesture);
+        }
+
+        document.addEventListener('click', unmuteOnGesture, { once: true });
+        document.addEventListener('keydown', unmuteOnGesture, { once: true });
+        document.addEventListener('touchstart', unmuteOnGesture, { once: true });
+        document.addEventListener('scroll', unmuteOnGesture, { once: true });
+        document.addEventListener('mousemove', unmuteOnGesture, { once: true });
+    }
+
+    function startLoopCheck() {
+        stopLoopCheck();
+        audioController.loopIntervalId = setInterval(() => {
+            const player = audioController.player;
+            const selection = audioController.selection;
+            if (!player || !selection || typeof player.getCurrentTime !== 'function') return;
+
+            const state = player.getPlayerState();
+            if (audioController.shouldBePlaying && state !== YT.PlayerState.PLAYING && state !== YT.PlayerState.BUFFERING) {
+                player.playVideo();
+                return;
+            }
+
+            if (state === YT.PlayerState.PLAYING && selection.end_time !== null && player.getCurrentTime() >= selection.end_time) {
+                player.seekTo(selection.start_time, true);
+            }
+        }, 500);
+    }
+
+    function stopLoopCheck() {
+        if (audioController.loopIntervalId !== null) {
+            clearInterval(audioController.loopIntervalId);
+            audioController.loopIntervalId = null;
+        }
+    }
+
+    function bindAudioButton() {
+        if (audioController.buttonBound) return;
+        audioController.buttonBound = true;
+
+        const audioBtn = document.getElementById('audioToggleBtn');
+        if (!audioBtn) return;
+
+        audioBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const player = audioController.player;
+            if (!player) return;
+
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                audioController.shouldBePlaying = false;
+                player.pauseVideo();
+            } else {
+                audioController.shouldBePlaying = true;
+                player.unMute();
+                player.playVideo();
+            }
+            updateAudioBtn();
+        });
+    }
+
+    // Browsers/YouTube can force-pause playback in background tabs; resume as soon as it's visible again.
+    function bindVisibilityResume() {
+        if (audioController.visibilityBound) return;
+        audioController.visibilityBound = true;
+
+        document.addEventListener('visibilitychange', () => {
+            const player = audioController.player;
+            if (!document.hidden && audioController.shouldBePlaying && player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                player.playVideo();
+            }
+        });
+    }
+
+    async function configurePlayer(selection) {
         const audioBtn = document.getElementById('audioToggleBtn');
 
-        if (audio) {
-            if (selection.enabled) {
-                audio.src = selection.src;
-                audio.dataset.audioEnabled = 'true';
-                audio.dataset.audioGenre = selection.genre;
-            } else {
-                audio.pause();
-                audio.removeAttribute('src');
-                audio.load();
-                audio.dataset.audioEnabled = 'false';
-                delete audio.dataset.audioGenre;
+        if (!selection.enabled) {
+            audioController.shouldBePlaying = false;
+            if (audioController.player) {
+                audioController.player.pauseVideo();
             }
+            stopLoopCheck();
+            if (audioBtn) audioBtn.hidden = true;
+            return;
         }
 
-        if (audioBtn) {
-            audioBtn.hidden = !selection.enabled;
+        audioController.selection = selection;
+        audioController.shouldBePlaying = true;
+        await ensureYouTubeApiLoaded();
+
+        if (audioBtn) audioBtn.hidden = false;
+        bindAudioButton();
+
+        if (!audioController.player) {
+            audioController.player = new YT.Player('siteAudioPlayer', {
+                width: '2',
+                height: '2',
+                videoId: selection.videoId,
+                playerVars: {
+                    autoplay: 1,
+                    mute: 1,
+                    controls: 0,
+                    disablekb: 1,
+                    modestbranding: 1,
+                    playsinline: 1,
+                    rel: 0,
+                    start: selection.start_time,
+                    // No end_time: loop the whole video natively instead of cutting it off.
+                    ...(selection.end_time === null ? { loop: 1, playlist: selection.videoId } : {})
+                },
+                events: {
+                    onReady: () => {
+                        audioController.player.mute();
+                        audioController.player.playVideo();
+                        bindUnmuteOnGesture();
+                        bindVisibilityResume();
+                        startLoopCheck();
+                        updateAudioBtn();
+                    },
+                    onStateChange: (event) => {
+                        if (event.data === YT.PlayerState.ENDED && audioController.selection && audioController.selection.end_time === null) {
+                            audioController.player.seekTo(audioController.selection.start_time, true);
+                            audioController.player.playVideo();
+                        } else if (audioController.shouldBePlaying && event.data === YT.PlayerState.PAUSED) {
+                            audioController.player.playVideo();
+                        }
+                        updateAudioBtn();
+                    }
+                }
+            });
+            return;
         }
 
-        document.dispatchEvent(new CustomEvent('siteaudio:config', {
-            detail: selection
-        }));
+        audioController.player.loadVideoById({ videoId: selection.videoId, startSeconds: selection.start_time });
+        audioController.player.mute();
+        audioController.player.playVideo();
     }
 
     function initCelebrations(settings) {
@@ -291,12 +429,15 @@
             settings.mode = 'normal';
         }
 
-        if (!VALID_GENRES.has(settings.genre)) {
+        const catalog = await loadAudiosCatalog();
+        const validGenres = new Set([...catalog.map(track => track.genre), 'no']);
+
+        if (!validGenres.has(settings.genre)) {
             console.warn(`Unknown genre "${settings.genre}"; falling back to no audio.`);
             settings.genre = 'no';
         }
 
-        applyAudioSelection(resolveAudioSelection(settings));
+        await configurePlayer(resolveAudioSelection(settings, catalog));
 
         if (settings.mode === 'celebrations') {
             try {

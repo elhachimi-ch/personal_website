@@ -902,6 +902,17 @@ body {
         color: #ffffff;
     }
 
+    /* Off-screen YouTube player: kept out of view but still rendered so autoplay/audio isn't throttled */
+    .site-audio-hidden {
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+        width: 2px;
+        height: 2px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
     @media (max-width: 768px) {
         .audio-toggle-btn {
             right: 14px;

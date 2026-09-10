@@ -1,12 +1,11 @@
 # Site display mode: "normal", "celebrations", or "7idad"
 mode: normal
 
-# Audio genre folder for non-Friday days: "anachid", "chaabi_fez", "modern_morocco", "classic_morocco", "ta9to9a", "tarab", "3ayta", or "no". The site picks a random audio file from assets/media/audio/<genre>/.
-genre: 3ayta
+# Audio genre for non-Friday days, or "no" to disable audio. Genres are whatever values appear in the "genre" column of assets/data/audios.csv. The site picks a random track from that genre and plays the YouTube link's start_time-end_time range.
+genre: maghribi_classic
 
-# Exact audio file to play. Leave empty to keep the current random selection by genre, for example: assets/media/audio/classic_morocco/nostalgie_ngoulek.mp3
-# audio_path: "assets/media/audio/ta9to9a/jabala_alala_wmaali.mp3"
-# audio_path: "assets/media/audio/tarab/tarab_eko.mp3"
+# Exact track to play by name. Leave empty to keep the random selection by genre. Must match a "name" value in assets/data/audios.csv (case-insensitive).
+# audio_name: "Sample Tarab Track"
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3
