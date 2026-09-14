@@ -2,7 +2,7 @@
 mode: normal
 
 # Audio genre for non-Friday days, or "no" to disable audio. Genres are whatever values appear in the "genre" column of assets/data/audios.csv. The site picks a random track from that genre and plays the YouTube link's start_time-end_time range.
-genre: comedy
+genre: maghribi_classic
 
 # Exact track to play by name. Leave empty to keep the random selection by genre. Must match a "name" value in assets/data/audios.csv (case-insensitive).
 # audio_name: "Sample Tarab Track"
