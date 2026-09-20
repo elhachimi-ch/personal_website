@@ -904,7 +904,7 @@ body {
 
     .audio-toggle-btn:hover::after,
     .audio-toggle-btn:focus-visible::after {
-        content: "Audio videos are sourced from YouTube";
+        content: "Audio videos are sourced and played live from YouTube";
         position: fixed;
         right: 20px;
         bottom: 82px;
