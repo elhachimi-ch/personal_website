@@ -128,6 +128,11 @@
         "Journal": "Sensors",
         "Publisher": "MDPI",
         "Link": "https://www.mdpi.com/journal/sensors"
+    },
+    {
+        "Journal": "Climate Physics and Atmospheric Science: Scientific Insights and Societal Challenges",
+        "Publisher": "Elsevier",
+        "Link": "https://www.sciencedirect.com/journal/climate-physics-and-atmospheric-science-scientific-insights-and-societal-challenges"
     }
 
 ]
