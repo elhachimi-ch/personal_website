@@ -1,8 +1,8 @@
 # Site display mode: "normal", "celebrations", or "7idad"
 mode: normal
 
-# Audio genre for non-Friday days, or "no" to disable audio. Genres are whatever values appear in the "genre" column of assets/data/audios.csv. The site picks a random track from that genre and plays the YouTube link's start_time-end_time range.
-genre: 3ayta
+# Audio genre for non-Friday days, "random" to pick from the whole catalog, or "no" to disable audio.
+genre: random
 
 # Exact track to play by name. Leave empty to keep the random selection by genre. Must match a "name" value in assets/data/audios.csv (case-insensitive).
 # audio_name: "3alwa_lbsir"

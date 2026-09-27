@@ -163,7 +163,8 @@
             return { enabled: false, genre };
         }
 
-        const track = pickRandom(catalog.filter(t => t.genre === genre));
+        const tracks = genre === 'random' ? catalog : catalog.filter(t => t.genre === genre);
+        const track = pickRandom(tracks);
         if (!track) {
             return { enabled: false, genre };
         }
@@ -430,7 +431,7 @@
         }
 
         const catalog = await loadAudiosCatalog();
-        const validGenres = new Set([...catalog.map(track => track.genre), 'no']);
+        const validGenres = new Set([...catalog.map(track => track.genre), 'no', 'random']);
 
         if (!validGenres.has(settings.genre)) {
             console.warn(`Unknown genre "${settings.genre}"; falling back to no audio.`);
