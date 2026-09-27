@@ -14,8 +14,12 @@
 }
 
 :root {
-    --primary: #C3262E;
-    --primary-light: #ce7175;
+    --green: #14565A;
+    --green-light: #2E7D80;
+    --red: #8C1739;
+    --red-light: #C07F92;
+    --primary: var(--red);
+    --primary-light: var(--red-light);
     --secondary: #F3F4F6;
     --secondary-dark: #E5E7EB;
     --background: #F8F8F7;
@@ -25,7 +29,7 @@
     --border-color: #D1D5DB;
     --card-bg: #FFFFFF;
     --accent: #0EA5E9;
-    --green-morocco: #006334;
+    --green-morocco: var(--green);
     --arabic-font: 'SamirKhouajaMaghribi', 'Noto Naskh Arabic', 'Scheherazade New', serif;
 }
 
@@ -72,6 +76,14 @@ body {
 .sidebar {
     width: 256px;
     background-color: var(--sidebar-bg);
+    background-image: linear-gradient(
+        color-mix(in srgb, var(--sidebar-bg) 65%, transparent),
+        color-mix(in srgb, var(--sidebar-bg) 65%, transparent)
+    ), url("media/img/moroccan-tent-panel-red.svg");
+    background-size: auto, 100% auto;
+    background-position: center top, center top;
+    background-repeat: no-repeat, repeat-y;
+    background-origin: border-box;
     border-right: 1px solid var(--border-color);
     padding: 24px;
     position: fixed;
@@ -91,7 +103,7 @@ body {
     text-align: center;
     margin-bottom: 24px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--green);
 }
 
 .profile-avatar {
@@ -141,11 +153,12 @@ body {
 }
 
 .nav-link:hover {
-    background-color: var(--secondary);
+    background-color: var(--green);
+    color: #fff;
 }
 
 .nav-link.active {
-    background-color: var(--primary);
+    background-color: var(--green);
     color: white;
 }
 
@@ -194,14 +207,14 @@ body {
     gap: 12px;
     margin-bottom: 24px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--green);
 }
 
 .social-link {
     width: 40px;
     height: 40px;
     border-radius: 8px;
-    background-color: var(--secondary);
+    background-color: var(--green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -214,27 +227,32 @@ body {
 }
 
 .social-link:hover {
-    background-color: var(--primary);
-    color: white;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px var(--green);
 }
 
-/* Icon sizing inside social buttons */
+/* Icon sizing inside social buttons; white on green, brand colour on hover */
 .social-link img {
     width: 22px;
     height: 22px;
     display: block;
+    filter: brightness(0) invert(1);
+}
+
+.social-link:hover img {
+    filter: none;
 }
 
 .theme-toggle {
     width: 100%;
     padding: 12px;
-    background-color: var(--secondary);
+    background-color: var(--green);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 17px;
     font-weight: 600;
-    color: var(--text-dark);
+    color: #fff;
     transition: all 0.2s;
     font-family: 'candara', sans-serif;
 }
@@ -242,6 +260,27 @@ body {
 .theme-toggle:hover {
     background-color: var(--primary);
     color: white;
+}
+
+/* Keep sidebar text legible over the tent pattern */
+body:not(.dark-mode) .sidebar {
+    --text-dark: #000;
+    --text-light: #000;
+}
+
+.sidebar .profile-name,
+.sidebar .profile-title,
+.sidebar .nav-link:not(.active),
+.sidebar [style*="text-transform: uppercase"] {
+    font-weight: 700;
+    text-shadow:
+        0 0 2px var(--sidebar-bg),
+        0 0 4px var(--sidebar-bg),
+        0 0 8px var(--sidebar-bg);
+}
+
+.sidebar .nav-link:hover {
+    text-shadow: none;
 }
 
 /* Main Content */
@@ -806,6 +845,42 @@ body {
     }
 }
 
+/* Compact desktop and tablet layouts */
+@media (max-width: 1200px) {
+    .page-content {
+        padding: 40px 24px;
+    }
+
+    .page-title {
+        font-size: 40px;
+    }
+
+    .hero {
+        padding: 20px 24px 12px;
+    }
+
+    .hero-title {
+        font-size: 56px;
+    }
+
+    .hero-subtitle {
+        font-size: 23px;
+    }
+
+    .hero-text {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .highlights {
+        padding: 20px 24px 24px;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .page-content {
@@ -871,6 +946,163 @@ body {
     .btn {
         width: 100%;
         justify-content: center;
+    }
+}
+
+@media (max-width: 1200px) and (min-width: 769px) and (max-height: 760px) {
+    .sidebar {
+        padding: 16px;
+    }
+
+    .sidebar-header {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+    }
+
+    .profile-avatar {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 10px;
+    }
+
+    .profile-name {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .profile-title {
+        font-size: 14px;
+    }
+
+    .nav-menu {
+        margin-bottom: 16px;
+    }
+
+    .nav-item {
+        margin-bottom: 4px;
+    }
+
+    .nav-link {
+        padding: 4px 12px;
+        font-size: 16px;
+    }
+
+    .nav-submenu {
+        margin-top: 3px;
+        margin-left: 6px;
+        padding-left: 8px;
+    }
+
+    .nav-subitem {
+        margin: 3px 0;
+    }
+
+    .nav-sublink {
+        padding: 3px 10px;
+        font-size: 14px;
+    }
+
+    .social-links {
+        gap: 8px;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+    }
+
+    .social-link {
+        width: 32px;
+        height: 32px;
+        font-size: 17px;
+    }
+
+    .social-link img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .theme-toggle {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .hero {
+        padding: 12px 24px 8px;
+    }
+
+    .hero-title {
+        font-size: 44px;
+        margin-bottom: 6px;
+    }
+
+    .hero-subtitle {
+        font-size: 19px;
+        margin-bottom: 10px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+        line-height: 1.35;
+        margin-bottom: 10px;
+    }
+
+    .cta-buttons {
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 7px 14px;
+        font-size: 14px;
+    }
+
+    .highlights {
+        margin-top: 12px;
+        padding: 12px 24px 14px;
+    }
+
+    .highlights h2 {
+        font-size: 22px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .highlights-grid {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .highlight-card {
+        padding: 10px 14px;
+    }
+
+    .highlight-number {
+        font-size: 24px;
+        margin-bottom: 3px;
+    }
+
+    .highlight-label {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+
+    .highlight-desc {
+        font-size: 13px;
+    }
+
+    .news-table-card {
+        padding: 10px 14px;
+    }
+
+    .news-table-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .news-table {
+        font-size: 13px;
+    }
+
+    .news-table th,
+    .news-table td {
+        padding: 5px 6px;
     }
 }
 
