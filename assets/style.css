@@ -288,6 +288,40 @@ body:not(.dark-mode) .sidebar {
     margin-left: 256px;
     flex: 1;
     background-color: var(--background);
+    padding: var(--frame-size);
+}
+
+/* Fixed khzana braid frame around the visible main content */
+:root {
+    --frame-size: 2px;
+}
+
+.khzana-frame {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 256px;
+    pointer-events: none;
+    z-index: 900;
+    background-image:
+        url("media/img/khzana_frame_h.svg"),
+        url("media/img/khzana_frame_h.svg"),
+        url("media/img/khzana_frame.svg"),
+        url("media/img/khzana_frame.svg");
+    background-size:
+        auto var(--frame-size),
+        auto var(--frame-size),
+        var(--frame-size) auto,
+        var(--frame-size) auto;
+    background-position: left top, left bottom, left top, right top;
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+}
+
+@media (max-width: 1024px) {
+    .khzana-frame {
+        left: 0;
+    }
 }
 
 .mobile-menu-btn {
