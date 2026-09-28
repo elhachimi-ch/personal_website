@@ -293,7 +293,7 @@ body:not(.dark-mode) .sidebar {
 
 /* Fixed khzana braid frame around the visible main content */
 :root {
-    --frame-size: 2px;
+    --frame-size: 5px;
 }
 
 .khzana-frame {
@@ -302,6 +302,7 @@ body:not(.dark-mode) .sidebar {
     right: 0;
     bottom: 0;
     left: 256px;
+    opacity: 0.35;
     pointer-events: none;
     z-index: 900;
     background-image:
