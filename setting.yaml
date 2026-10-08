@@ -2,7 +2,7 @@
 mode: normal
 
 # Audio genre for non-Friday days, "random" to pick from the whole catalog, or "no" to disable audio.
-genre: 3ayta
+genre: jbala
 
 # Exact track to play by name. Leave empty to keep the random selection by genre. Must match a "name" value in assets/data/audios.csv (case-insensitive).
 # audio_name: "3alwa_lbsir"
