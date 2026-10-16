@@ -286,6 +286,7 @@ body:not(.dark-mode) .sidebar {
 .main-content {
     margin-left: 256px;
     flex: 1;
+    min-width: 0; /* let wide children (e.g. news table) scroll instead of widening the page */
     background-color: var(--background);
     padding: var(--frame-size) var(--frame-size) var(--frame-size) 0;
 }
@@ -961,13 +962,26 @@ body:not(.dark-mode) .sidebar {
         grid-template-columns: 1fr !important;
     }
 
-
-/* Ensure one highlight per row on larger mobile widths (landscape/plus sizes) */
-@media (max-width: 1024px) {
-    .highlights-grid {
-        grid-template-columns: 1fr !important;
+    .hero-title {
+        overflow-wrap: anywhere;
     }
-}
+
+    .highlights {
+        padding: 20px 12px 24px;
+    }
+
+    .news-table-card {
+        padding: 14px 12px;
+    }
+
+    .news-table {
+        font-size: 14px;
+    }
+
+    .news-table td:first-child {
+        white-space: normal;
+    }
+
     .cta-buttons {
         flex-direction: column;
     }
@@ -975,6 +989,13 @@ body:not(.dark-mode) .sidebar {
     .btn {
         width: 100%;
         justify-content: center;
+    }
+}
+
+/* Ensure one highlight per row on larger mobile widths (landscape/plus sizes) */
+@media (max-width: 1024px) {
+    .highlights-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 
