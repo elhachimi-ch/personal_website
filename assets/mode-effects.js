@@ -141,9 +141,9 @@
 
     function resolveAudioSelection(settings, catalog) {
         if (isFridayLocalTime()) {
-            const fridayTrack = pickRandom(catalog.filter(track => track.genre === 'anachid'));
+            const fridayTrack = pickRandom(catalog.filter(track => track.genre === 'din'));
             if (!fridayTrack) {
-                return { enabled: false, genre: 'anachid' };
+                return { enabled: false, genre: 'din' };
             }
 
             return { enabled: true, ...fridayTrack };
