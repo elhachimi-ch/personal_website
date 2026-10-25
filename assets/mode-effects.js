@@ -257,6 +257,10 @@
             if (!player || !selection || typeof player.getCurrentTime !== 'function') return;
 
             const state = player.getPlayerState();
+            if (state === YT.PlayerState.ENDED) {
+                restartFromStartTime();
+                return;
+            }
             if (audioController.shouldBePlaying && state !== YT.PlayerState.PLAYING && state !== YT.PlayerState.BUFFERING) {
                 player.playVideo();
                 return;
@@ -266,6 +270,15 @@
                 player.seekTo(selection.start_time, true);
             }
         }, 500);
+    }
+
+    // Loop back to start_time (not 0) when the video reaches its natural end.
+    function restartFromStartTime() {
+        const player = audioController.player;
+        const selection = audioController.selection;
+        if (!player || !selection) return;
+        player.seekTo(selection.start_time, true);
+        if (audioController.shouldBePlaying) player.playVideo();
     }
 
     function stopLoopCheck() {
@@ -345,9 +358,8 @@
                     modestbranding: 1,
                     playsinline: 1,
                     rel: 0,
-                    start: selection.start_time,
-                    // No end_time: loop the whole video natively instead of cutting it off.
-                    ...(selection.end_time === null ? { loop: 1, playlist: selection.videoId } : {})
+                    start: selection.start_time
+                    // No native loop: it always restarts at 0. ENDED is handled below to restart at start_time.
                 },
                 events: {
                     onReady: () => {
@@ -359,9 +371,8 @@
                         updateAudioBtn();
                     },
                     onStateChange: (event) => {
-                        if (event.data === YT.PlayerState.ENDED && audioController.selection && audioController.selection.end_time === null) {
-                            audioController.player.seekTo(audioController.selection.start_time, true);
-                            audioController.player.playVideo();
+                        if (event.data === YT.PlayerState.ENDED) {
+                            restartFromStartTime();
                         } else if (audioController.shouldBePlaying && event.data === YT.PlayerState.PAUSED) {
                             audioController.player.playVideo();
                         }
