@@ -11,4 +11,4 @@ genre: patriotic
 animation_automation_time_interval: 3
 
 # Also trigger confetti on mouse click (celebrations mode only)
-celebration_when_click: true
+celebration_when_click: true 
