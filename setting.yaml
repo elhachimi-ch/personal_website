@@ -2,10 +2,10 @@
 mode: normal
 
 # Audio genre for non-Friday days, "random" to pick from the whole catalog, or "no" to disable audio.
-# genre: 3ayta
+genre: maghribi_modern
 
 # Exact track to play by name. Leave empty to keep the random selection by genre. Must match a "name" value in assets/data/audios.csv (case-insensitive).
-audio_name: roujola_daoudia
+# audio_name: roujola_daoudia
 
 # Seconds between automatic confetti bursts at the cursor (celebrations mode only)
 animation_automation_time_interval: 3
