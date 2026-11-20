@@ -193,6 +193,67 @@
         return ytApiPromise;
     }
 
+    const YOUTUBE_ERRORS = {
+        2: 'invalid video id',
+        5: 'the browser cannot play this video',
+        100: 'the video was removed or is private',
+        101: 'the owner does not allow playing it on other websites',
+        150: 'the owner does not allow playing it on other websites',
+        153: 'YouTube rejected the embed (open the site over http://, not file://)'
+    };
+
+    // Wraps the YouTube player in a small interface
+    // (play/pause/mute/unmute/isMuted/isPlaying/isBuffering/isEnded/getCurrentTime/seekTo)
+    // used by the loop, resume and button logic below.
+    function createYouTubePlayer(selection, onEvent) {
+        return new Promise((resolve, reject) => {
+            if (!window.YT || !window.YT.Player) {
+                reject(new Error('YouTube IFrame API unavailable'));
+                return;
+            }
+
+            const stateNames = {
+                [YT.PlayerState.PLAYING]: 'playing',
+                [YT.PlayerState.PAUSED]: 'paused',
+                [YT.PlayerState.ENDED]: 'ended',
+                [YT.PlayerState.BUFFERING]: 'buffering'
+            };
+
+            const player = new YT.Player('siteAudioPlayer', {
+                width: '2',
+                height: '2',
+                videoId: selection.videoId,
+                playerVars: {
+                    autoplay: 1,
+                    mute: 1,
+                    controls: 0,
+                    disablekb: 1,
+                    modestbranding: 1,
+                    playsinline: 1,
+                    rel: 0,
+                    start: selection.start_time
+                    // No native loop: it always restarts at 0. ENDED is handled by the controller to restart at start_time.
+                },
+                events: {
+                    onReady: () => resolve({
+                        play: () => player.playVideo(),
+                        pause: () => player.pauseVideo(),
+                        mute: () => player.mute(),
+                        unmute: () => player.unMute(),
+                        isMuted: () => player.isMuted(),
+                        isPlaying: () => player.getPlayerState() === YT.PlayerState.PLAYING,
+                        isBuffering: () => player.getPlayerState() === YT.PlayerState.BUFFERING,
+                        isEnded: () => player.getPlayerState() === YT.PlayerState.ENDED,
+                        getCurrentTime: () => player.getCurrentTime(),
+                        seekTo: (seconds) => player.seekTo(seconds, true)
+                    }),
+                    onStateChange: (event) => onEvent(stateNames[event.data] || 'other'),
+                    onError: (event) => onEvent('error', YOUTUBE_ERRORS[event.data] || `YouTube error ${event.data}`)
+                }
+            });
+        });
+    }
+
     const audioController = {
         player: null,
         selection: null,
@@ -200,15 +261,16 @@
         gestureListenersBound: false,
         buttonBound: false,
         visibilityBound: false,
-        shouldBePlaying: false
+        shouldBePlaying: false,
+        failed: false
     };
 
     function updateAudioBtn() {
         const audioBtn = document.getElementById('audioToggleBtn');
         const player = audioController.player;
-        if (!audioBtn || !player || typeof player.getPlayerState !== 'function') return;
+        if (!audioBtn || !player) return;
 
-        const isPlaying = player.getPlayerState() === YT.PlayerState.PLAYING;
+        const isPlaying = player.isPlaying();
         const isMuted = player.isMuted();
 
         if (!isPlaying) {
@@ -229,9 +291,9 @@
         function unmuteOnGesture() {
             const player = audioController.player;
             if (player) {
-                player.unMute();
-                if (audioController.shouldBePlaying && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                    player.playVideo();
+                player.unmute();
+                if (audioController.shouldBePlaying && !player.isPlaying()) {
+                    player.play();
                 }
             }
             updateAudioBtn();
@@ -249,36 +311,67 @@
         document.addEventListener('mousemove', unmuteOnGesture, { once: true });
     }
 
-    function startLoopCheck() {
-        stopLoopCheck();
-        audioController.loopIntervalId = setInterval(() => {
-            const player = audioController.player;
-            const selection = audioController.selection;
-            if (!player || !selection || typeof player.getCurrentTime !== 'function') return;
-
-            const state = player.getPlayerState();
-            if (state === YT.PlayerState.ENDED) {
-                restartFromStartTime();
-                return;
-            }
-            if (audioController.shouldBePlaying && state !== YT.PlayerState.PLAYING && state !== YT.PlayerState.BUFFERING) {
-                player.playVideo();
-                return;
-            }
-
-            if (state === YT.PlayerState.PLAYING && selection.end_time !== null && player.getCurrentTime() >= selection.end_time) {
-                player.seekTo(selection.start_time, true);
-            }
-        }, 500);
-    }
-
     // Loop back to start_time (not 0) when the video reaches its natural end.
     function restartFromStartTime() {
         const player = audioController.player;
         const selection = audioController.selection;
         if (!player || !selection) return;
-        player.seekTo(selection.start_time, true);
-        if (audioController.shouldBePlaying) player.playVideo();
+        player.seekTo(selection.start_time);
+        if (audioController.shouldBePlaying) player.play();
+    }
+
+    // Unplayable track (removed, private, embedding disabled): stop retrying and hide the button.
+    function disableAudio(reason) {
+        const selection = audioController.selection;
+        console.warn(`Audio "${selection ? selection.name : ''}" (${selection ? selection.link : ''}) cannot be played: ${reason}. Replace its link in assets/data/audios.csv.`);
+        audioController.failed = true;
+        audioController.shouldBePlaying = false;
+        stopLoopCheck();
+        const audioBtn = document.getElementById('audioToggleBtn');
+        if (audioBtn) audioBtn.hidden = true;
+    }
+
+    function handlePlayerEvent(type, detail) {
+        if (type === 'error') {
+            disableAudio(detail);
+            return;
+        }
+
+        const player = audioController.player;
+        if (!player) return;
+
+        if (type === 'ended') {
+            restartFromStartTime();
+        } else if (type === 'paused' && audioController.shouldBePlaying) {
+            player.play();
+        }
+        updateAudioBtn();
+    }
+
+    function startLoopCheck() {
+        stopLoopCheck();
+        audioController.loopIntervalId = setInterval(() => {
+            const player = audioController.player;
+            const selection = audioController.selection;
+            if (!player || !selection) return;
+
+            // Keep the button label in sync: YouTube's isMuted() lags behind unMute(), and some state
+            // changes (e.g. unmute) don't fire a player event.
+            updateAudioBtn();
+
+            if (player.isEnded()) {
+                restartFromStartTime();
+                return;
+            }
+            if (audioController.shouldBePlaying && !player.isPlaying() && !player.isBuffering()) {
+                player.play();
+                return;
+            }
+
+            if (player.isPlaying() && selection.end_time !== null && player.getCurrentTime() >= selection.end_time) {
+                player.seekTo(selection.start_time);
+            }
+        }, 500);
     }
 
     function stopLoopCheck() {
@@ -300,27 +393,27 @@
             const player = audioController.player;
             if (!player) return;
 
-            if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+            if (player.isPlaying()) {
                 audioController.shouldBePlaying = false;
-                player.pauseVideo();
+                player.pause();
             } else {
                 audioController.shouldBePlaying = true;
-                player.unMute();
-                player.playVideo();
+                player.unmute();
+                player.play();
             }
             updateAudioBtn();
         });
     }
 
-    // Browsers/YouTube can force-pause playback in background tabs; resume as soon as it's visible again.
+    // Browsers can force-pause playback in background tabs; resume as soon as it's visible again.
     function bindVisibilityResume() {
         if (audioController.visibilityBound) return;
         audioController.visibilityBound = true;
 
         document.addEventListener('visibilitychange', () => {
             const player = audioController.player;
-            if (!document.hidden && audioController.shouldBePlaying && player && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                player.playVideo();
+            if (!document.hidden && audioController.shouldBePlaying && player && !player.isPlaying()) {
+                player.play();
             }
         });
     }
@@ -331,7 +424,7 @@
         if (!selection.enabled) {
             audioController.shouldBePlaying = false;
             if (audioController.player) {
-                audioController.player.pauseVideo();
+                audioController.player.pause();
             }
             stopLoopCheck();
             if (audioBtn) audioBtn.hidden = true;
@@ -340,52 +433,32 @@
 
         audioController.selection = selection;
         audioController.shouldBePlaying = true;
-        await ensureYouTubeApiLoaded();
+
+        try {
+            await ensureYouTubeApiLoaded();
+            audioController.player = await createYouTubePlayer(selection, handlePlayerEvent);
+        } catch (error) {
+            console.warn('Could not start the audio player; audio disabled.', error);
+            audioController.shouldBePlaying = false;
+            if (audioBtn) audioBtn.hidden = true;
+            return;
+        }
+
+        // The player may have reported an error while it was starting up.
+        if (audioController.failed) return;
 
         if (audioBtn) audioBtn.hidden = false;
         bindAudioButton();
 
-        if (!audioController.player) {
-            audioController.player = new YT.Player('siteAudioPlayer', {
-                width: '2',
-                height: '2',
-                videoId: selection.videoId,
-                playerVars: {
-                    autoplay: 1,
-                    mute: 1,
-                    controls: 0,
-                    disablekb: 1,
-                    modestbranding: 1,
-                    playsinline: 1,
-                    rel: 0,
-                    start: selection.start_time
-                    // No native loop: it always restarts at 0. ENDED is handled below to restart at start_time.
-                },
-                events: {
-                    onReady: () => {
-                        audioController.player.mute();
-                        audioController.player.playVideo();
-                        bindUnmuteOnGesture();
-                        bindVisibilityResume();
-                        startLoopCheck();
-                        updateAudioBtn();
-                    },
-                    onStateChange: (event) => {
-                        if (event.data === YT.PlayerState.ENDED) {
-                            restartFromStartTime();
-                        } else if (audioController.shouldBePlaying && event.data === YT.PlayerState.PAUSED) {
-                            audioController.player.playVideo();
-                        }
-                        updateAudioBtn();
-                    }
-                }
-            });
-            return;
-        }
-
-        audioController.player.loadVideoById({ videoId: selection.videoId, startSeconds: selection.start_time });
-        audioController.player.mute();
-        audioController.player.playVideo();
+        // Start muted so browsers allow autoplay; the first user gesture unmutes.
+        const player = audioController.player;
+        player.mute();
+        player.seekTo(selection.start_time);
+        player.play();
+        bindUnmuteOnGesture();
+        bindVisibilityResume();
+        startLoopCheck();
+        updateAudioBtn();
     }
 
     function initCelebrations(settings) {
