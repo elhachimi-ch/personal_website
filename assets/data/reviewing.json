@@ -154,5 +154,20 @@
         "Journal": "Artificial Intelligence in Geosciences",
         "Publisher": "Elsevier",
         "Link": "https://www.sciencedirect.com/journal/artificial-intelligence-in-geosciences"
+    },
+    {
+        "Journal": "Frontiers in Water",
+        "Publisher": "Frontiers Media",
+        "Link": "https://www.frontiersin.org/journals/water"
+    },
+    {
+        "Journal": "Computing",
+        "Publisher": "Springer",
+        "Link": "https://link.springer.com/journal/607"
+    },
+    {
+        "Journal": "Earth Science Informatics",
+        "Publisher": "Springer",
+        "Link": "https://link.springer.com/journal/12145"
     }
 ]
