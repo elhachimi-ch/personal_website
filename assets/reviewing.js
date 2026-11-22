@@ -43,7 +43,7 @@
 
         return `
           <details class="reviewing-group">
-            <summary>${escapeHtml(group.name)}</summary>
+            <summary>${escapeHtml(group.name)} (${group.items.length})</summary>
             <ul class="reviewing-journals">${journals}</ul>
           </details>`;
       }).join('\n');
