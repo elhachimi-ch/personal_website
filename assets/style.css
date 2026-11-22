@@ -542,9 +542,45 @@ body:not(.dark-mode) .sidebar {
     text-align: center;
 }
 
-.reviewing-table td:last-child {
-    white-space: nowrap;
-    width: 1%;
+.reviewing-groups {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.reviewing-group {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.reviewing-group summary {
+    cursor: pointer;
+    font-weight: 700;
+    padding: 14px 18px;
+}
+
+.reviewing-group summary:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.reviewing-journals {
+    list-style: none;
+    border-top: 1px solid var(--border-color);
+    padding: 0 18px;
+}
+
+.reviewing-journal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.reviewing-journal + .reviewing-journal {
+    border-top: 1px solid var(--border-color);
 }
 
 /* Explore Grid */

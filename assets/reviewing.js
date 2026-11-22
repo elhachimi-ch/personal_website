@@ -15,28 +15,38 @@
     if (!container) return;
 
     if (!Array.isArray(items) || !items.length) {
-      container.innerHTML = '<tr><td colspan="3" class="news-table-empty">No reviewing records found.</td></tr>';
+      container.innerHTML = '<p class="news-table-empty">No reviewing records found.</p>';
       return;
     }
 
-    container.innerHTML = items.map((item) => {
-      const journal = item && item.Journal ? String(item.Journal).trim() : '';
+    const groups = new Map();
+    items.forEach((item) => {
       const publisher = item && item.Publisher ? String(item.Publisher).trim() : '';
-      const link = item && item.Link ? String(item.Link).trim() : '';
+      const name = publisher || 'Unknown Publisher';
+      const key = name.toLowerCase().replace(/\s*(?:&|\band\b)\s*/g, ' and ').replace(/\s+/g, ' ').trim();
+      if (!groups.has(key)) groups.set(key, { name, items: [] });
+      groups.get(key).items.push(item);
+    });
 
-      const nameCell = escapeHtml(journal || 'Unknown Journal');
-      const publisherCell = escapeHtml(publisher || '—');
-      const linkCell = link
-        ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="action-btn">Open</a>`
-        : '<span class="news-table-empty">—</span>';
+    container.innerHTML = [...groups.values()]
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }))
+      .map((group) => {
+        const journals = group.items.map((item) => {
+          const journal = item && item.Journal ? String(item.Journal).trim() : '';
+          const link = item && item.Link ? String(item.Link).trim() : '';
+          const linkCell = link
+            ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Open ${escapeHtml(journal || 'Unknown Journal')}">Open</a>`
+            : '<span class="news-table-empty">—</span>';
 
-      return `
-        <tr>
-          <td>${nameCell}</td>
-          <td>${publisherCell}</td>
-          <td>${linkCell}</td>
-        </tr>`;
-    }).join('\n');
+          return `<li class="reviewing-journal"><span>${escapeHtml(journal || 'Unknown Journal')}</span>${linkCell}</li>`;
+        }).join('\n');
+
+        return `
+          <details class="reviewing-group">
+            <summary>${escapeHtml(group.name)}</summary>
+            <ul class="reviewing-journals">${journals}</ul>
+          </details>`;
+      }).join('\n');
   }
 
   async function loadReviewing() {
@@ -56,7 +66,7 @@
         : [];
       renderItems(sortedItems);
     } catch (err) {
-      container.innerHTML = '<tr><td colspan="3" class="news-table-empty">Failed to load reviewing information.</td></tr>';
+      container.innerHTML = '<p class="news-table-empty">Failed to load reviewing information.</p>';
       console.error(err);
     }
   }
