@@ -174,5 +174,10 @@
         "Journal": "Next Sustainability",
         "Publisher": "Elsevier",
         "Link": "https://www.sciencedirect.com/journal/next-sustainability"
+    },
+    {
+        "Journal": "Agriculture",
+        "Publisher": "MDPI",
+        "Link": "https://www.mdpi.com/journal/agriculture"
     }
 ]
