@@ -89,8 +89,9 @@
                 </div>
 
                 <div class="highlights">
-                    <div style="max-width: 1024px; margin: 0 auto;">
-                        <h2 style="font-size: 28px; font-weight: bold; margin-bottom: 20px; color: var(--text-dark);">Research Highlights</h2>
+                    <div class="home-sections">
+                      <section class="home-section home-section-highlights" aria-labelledby="highlightsTitle">
+                        <h2 class="home-section-title" id="highlightsTitle">Research Highlights</h2>
                         <div class="highlights-grid">
                             <div class="highlight-card" id="highlight-publications">
                                 <div class="highlight-number" id="highlight-publications-number">0+</div>
@@ -112,9 +113,11 @@
                                 <div class="highlight-desc">Working with leading researchers worldwide</div>
                             </div>
                         </div>
+                      </section>
 
+                      <section class="home-section home-section-news" aria-labelledby="newsTitle">
+                        <h2 class="home-section-title" id="newsTitle">Recent News</h2>
                         <div class="news-table-card">
-                            <h3 class="news-table-title">Recent News</h3>
                             <div class="news-table-wrapper">
                                 <table class="news-table" id="newsTable">
                                     <thead>
@@ -123,12 +126,14 @@
                                             <th scope="col">Event</th>
                                             <th scope="col">Place</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">Media</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
                             </div>
                         </div>
+                      </section>
                     </div>
                 </div>
 
@@ -424,7 +429,7 @@
                     if (!res.ok) throw new Error('Failed to load news.json');
                     const rows = await res.json();
                     if (!Array.isArray(rows) || !rows.length) {
-                        tableBody.innerHTML = '<tr><td colspan="4" class="news-table-empty">No news available.</td></tr>';
+                        tableBody.innerHTML = '<tr><td colspan="5" class="news-table-empty">No news available.</td></tr>';
                         return;
                     }
 
@@ -436,11 +441,12 @@
                                 <td>${renderCell(item.event, item.link_event)}</td>
                                 <td>${escapeHtml(placeText)}</td>
                                 <td>${escapeHtml(item.date)}</td>
+                                <td>${item.link_media ? `<a class="news-media-button" href="${escapeHtml(item.link_media)}" target="_blank" rel="noopener noreferrer">Media</a>` : ''}</td>
                             </tr>
                         `;
                     }).join('');
                 } catch (err) {
-                    tableBody.innerHTML = '<tr><td colspan="4" class="news-table-empty">Failed to load news.</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="5" class="news-table-empty">Failed to load news.</td></tr>';
                     console.error(err);
                 }
             }

@@ -4,6 +4,38 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'candara';
+    src: url('media/fonts/candara/candara-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'candara';
+    src: url('media/fonts/candara/candara-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'candara';
+    src: url('media/fonts/candara/candara-italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'candara';
+    src: url('media/fonts/candara/candara-bold-italic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 /* Arabic font face */
 @font-face {
     font-family: 'SamirKhouajaMaghribi';
@@ -381,38 +413,39 @@ body:not(.dark-mode) .sidebar {
 /* People section: justify names and avoid flex alignment issues */
 
 .hero {
-    padding: 1.25em 32px 0.75em;
+    padding: 1em 32px 0.5em;
     max-width: 1024px;
     margin: 0 auto;
 }
 
 .hero-title {
-    font-size: 75px;
+    font-size: 64px;
     font-weight: bold;
     font-family: 'candara', sans-serif;
-    margin-bottom: 10px;
+    line-height: 1.1;
+    margin-bottom: 6px;
     color: var(--text-dark);
 }
 
 .hero-subtitle {
-    font-size: 27px;
+    font-size: 24px;
     color: var(--text-light);
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     font-weight: 500;
 }
 
 .hero-text {
-    font-size: 21px;
+    font-size: 19px;
     color: var(--text-dark);
-    line-height: 1.6;
-    margin-bottom: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
     text-align: justify;
 }
 
 .cta-buttons {
     display: flex;
     gap: 12px;
-    margin-top: 16px;
+    margin-top: 10px;
     flex-wrap: wrap;
 }
 
@@ -449,44 +482,67 @@ body:not(.dark-mode) .sidebar {
     background-color: var(--secondary-dark);
 }
 
-/* Highlights Section */
+/* Highlights and Recent News */
 .highlights {
     background-color: var(--secondary);
-    padding: 24px 32px 28px;
-    margin-top: 20px;
+    padding: 18px 32px 24px;
+    margin-top: 12px;
+}
+
+.home-sections {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    max-width: 960px; /* lines up with the hero text (1024px minus its 32px side padding) */
+    margin: 0 auto;
+}
+
+.home-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: var(--text-dark);
 }
 
 .highlights-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    max-width: 1024px;
-    margin: 0 auto 18px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
 }
 
+/* Compact card: number on the left, label and description on the right */
 .highlight-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 12px;
+    align-items: center;
     background-color: var(--card-bg);
-    padding: 18px 20px;
+    padding: 12px 14px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    text-align: center;
+    text-align: left;
 }
 
 .highlight-number {
-    font-size: 32px;
+    grid-row: span 2;
+    min-width: 1.9em; /* same column width for every card so labels line up */
+    font-size: 30px;
     font-weight: bold;
+    line-height: 1;
     color: var(--primary);
-    margin-bottom: 6px;
 }
 
 .highlight-label {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
-    margin-bottom: 6px;
+    line-height: 1.2;
 }
 
 .highlight-desc {
-    font-size: 15px;
+    grid-column: 2;
+    font-size: 13px;
+    line-height: 1.35;
     color: var(--text-light);
 }
 
@@ -494,16 +550,7 @@ body:not(.dark-mode) .sidebar {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 18px 20px;
-    max-width: 1024px;
-    margin: 0 auto;
-}
-
-.news-table-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-dark);
+    padding: 12px 16px;
 }
 
 .news-table-wrapper {
@@ -521,7 +568,7 @@ body:not(.dark-mode) .sidebar {
     text-align: left;
     padding: 8px 10px;
     border-bottom: 1px solid var(--border-color);
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .news-table th {
@@ -535,6 +582,37 @@ body:not(.dark-mode) .sidebar {
 .news-table td:first-child {
     white-space: nowrap;
     font-weight: 600;
+}
+
+/* Date (4th) and Media (5th) columns stay on one line */
+.news-table td:nth-child(4),
+.news-table td:nth-child(5) {
+    white-space: nowrap;
+}
+
+.news-table th:nth-child(5),
+.news-table td:nth-child(5) {
+    text-align: center;
+}
+
+.news-media-button {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 1.4;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.news-media-button:hover {
+    background-color: var(--primary-light);
+}
+
+.news-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .news-table-empty {
@@ -922,19 +1000,19 @@ body:not(.dark-mode) .sidebar {
     }
 
     .hero {
-        padding: 20px 24px 12px;
+        padding: 16px 24px 8px;
     }
 
     .hero-title {
-        font-size: 56px;
+        font-size: 52px;
     }
 
     .hero-subtitle {
-        font-size: 23px;
+        font-size: 21px;
     }
 
     .hero-text {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .btn {
@@ -943,7 +1021,7 @@ body:not(.dark-mode) .sidebar {
     }
 
     .highlights {
-        padding: 20px 24px 24px;
+        padding: 16px 24px 20px;
     }
 }
 
@@ -954,7 +1032,7 @@ body:not(.dark-mode) .sidebar {
     }
 
     .hero {
-        padding: 32px 16px;
+        padding: 20px 16px 12px;
     }
 
     .hero-title {
@@ -993,21 +1071,20 @@ body:not(.dark-mode) .sidebar {
         grid-template-columns: 1fr;
     }
 
-    /* One highlight card per row on mobile */
-    .highlights-grid {
-        grid-template-columns: 1fr !important;
-    }
-
     .hero-title {
         overflow-wrap: anywhere;
     }
 
     .highlights {
-        padding: 20px 12px 24px;
+        padding: 16px 12px 20px;
     }
 
     .news-table-card {
-        padding: 14px 12px;
+        padding: 10px 12px;
+    }
+
+    .news-table td:nth-child(4) {
+        white-space: normal;
     }
 
     .news-table {
@@ -1028,10 +1105,15 @@ body:not(.dark-mode) .sidebar {
     }
 }
 
-/* Ensure one highlight per row on larger mobile widths (landscape/plus sizes) */
 @media (max-width: 1024px) {
+    .home-sections {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
     .highlights-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
@@ -1145,41 +1227,33 @@ body:not(.dark-mode) .sidebar {
         padding: 12px 24px 14px;
     }
 
-    .highlights h2 {
-        font-size: 22px !important;
-        margin-bottom: 12px !important;
+    .home-section-title {
+        font-size: 20px;
+        margin-bottom: 8px;
     }
 
     .highlights-grid {
-        gap: 10px;
-        margin-bottom: 10px;
+        gap: 8px;
     }
 
     .highlight-card {
-        padding: 10px 14px;
+        padding: 8px 12px;
     }
 
     .highlight-number {
         font-size: 24px;
-        margin-bottom: 3px;
     }
 
     .highlight-label {
-        font-size: 16px;
-        margin-bottom: 3px;
+        font-size: 15px;
     }
 
     .highlight-desc {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .news-table-card {
-        padding: 10px 14px;
-    }
-
-    .news-table-title {
-        font-size: 16px;
-        margin-bottom: 8px;
+        padding: 8px 12px;
     }
 
     .news-table {

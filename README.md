@@ -63,7 +63,11 @@ Option B - Direct Upload:
 
 To customize the content, you'll need to rebuild the site. The source code is available in the main project repository.
 
+The site loads its Candara font files from `assets/media/fonts/candara/`.
+
 ### Updating Content
+
+Edit `assets/data/news.json` to update recent news. Add an optional `link_media` URL to an entry to show its Media button.
 
 Edit the following files in the source project:
 - `client/src/pages/Home.tsx` - Homepage content
