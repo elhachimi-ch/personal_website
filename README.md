@@ -69,6 +69,8 @@ The site loads its Candara font files from `assets/media/fonts/candara/`.
 
 Edit `assets/data/news.json` to update recent news. Add an optional `link_media` URL to an entry to show its Media button.
 
+Edit `assets/data/teaching.json` to update courses. Each entry has a `title`, image path, optional `description` and `course_link`, and a `sessions` array of `date` and `place` entries for the teaching history. Remove or replace the example course and session with your own details.
+
 Edit the following files in the source project:
 - `client/src/pages/Home.tsx` - Homepage content
 - `client/src/pages/About.tsx` - About page

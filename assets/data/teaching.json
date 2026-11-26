@@ -1,0 +1,14 @@
+[
+  {
+    "title": "AI for EO",
+    "description": "AI for Earth Observation: Theory, Practice, and LABs",
+    "image": "assets/media/img/teaching-ai-eo.svg",
+    "course_link": "https://elhachimi-ch.github.io/ai_for_eo_course/",
+    "sessions": [
+      {
+        "date": "2026",
+        "place": "The Hong Kong Polytechnic University, Hong Kong SAR"
+      }
+    ]
+  }
+]

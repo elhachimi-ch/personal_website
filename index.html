@@ -26,6 +26,7 @@
                     <li class="nav-item"><a href="#home" class="nav-link active" data-page="home">Homepage</a></li>
                     <li class="nav-item"><a href="#bio" class="nav-link" data-page="bio">Bio</a></li>
                     <li class="nav-item"><a href="#publications" class="nav-link" data-page="publications">Publications</a></li>
+                    <li class="nav-item"><a href="#teaching" class="nav-link" data-page="teaching">Teaching</a></li>
                     <li class="nav-item"><a href="#projects" class="nav-link" data-page="projects">Projects & Grants</a></li>
                     
                     <!-- Awards section temporarily removed 
@@ -234,6 +235,15 @@
                 </div>
             </div>
 
+            <!-- Teaching Page -->
+            <div id="teaching" class="page">
+                <div class="page-content">
+                    <h1 class="page-title">Teaching</h1>
+                    <p class="teaching-intro">Courses and learning experiences.</p>
+                    <div class="teaching-grid" id="teachingContainer"></div>
+                </div>
+            </div>
+
             <!-- Projects & Grants Page -->
             <div id="projects" class="page">
                 <div class="page-content">
@@ -395,12 +405,23 @@
     <div class="khzana-frame" aria-hidden="true"></div>
     <div id="siteAudioPlayer" class="site-audio-hidden" aria-hidden="true"></div>
     <button id="audioToggleBtn" class="audio-toggle-btn" type="button" aria-label="Pause audio" title="Pause audio" hidden>⏸</button>
+    <dialog class="teaching-dialog" id="teachingDialog" aria-labelledby="teachingDialogTitle">
+        <div class="teaching-dialog-header">
+            <div>
+                <p class="teaching-dialog-label">Teaching history</p>
+                <h2 id="teachingDialogTitle"></h2>
+            </div>
+            <form method="dialog"><button class="teaching-dialog-close" aria-label="Close teaching history">×</button></form>
+        </div>
+        <div id="teachingDialogSessions"></div>
+    </dialog>
     <script src="assets/mode-effects.js"></script>
     <script src="assets/publications.js"></script>
     <script src="assets/people.js"></script>
     <script src="assets/projects-grants.js"></script>
     <script src="assets/code-demos.js"></script>
     <script src="assets/reviewing.js"></script>
+    <script src="assets/teaching.js"></script>
     <script>
         (function() {
             const tableBody = document.querySelector('#newsTable tbody');
