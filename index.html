@@ -444,6 +444,16 @@
                 return `<a href="${safeLink}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
             }
 
+            function parseNewsDate(value) {
+                const match = String(value || '').match(/^(\d{1,2})(?:-\d{1,2})?\s+([A-Za-z]+)\s+(\d{4})$/);
+                if (!match) return null;
+
+                const month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].indexOf(match[2].toLowerCase());
+                if (month < 0) return null;
+
+                return Date.UTC(Number(match[3]), month, Number(match[1]));
+            }
+
             async function loadNews() {
                 try {
                     const res = await fetch('assets/data/news.json');
@@ -454,18 +464,25 @@
                         return;
                     }
 
-                    tableBody.innerHTML = rows.map(item => {
-                        const placeText = item.place || item.venue || '';
-                        return `
-                            <tr>
-                                <td>${renderCell(item.role, item.link_role)}</td>
-                                <td>${renderCell(item.event, item.link_event)}</td>
-                                <td>${escapeHtml(placeText)}</td>
-                                <td>${escapeHtml(item.date)}</td>
-                                <td>${item.link_media ? `<a class="news-media-button" href="${escapeHtml(item.link_media)}" target="_blank" rel="noopener noreferrer">Media</a>` : ''}</td>
-                            </tr>
-                        `;
-                    }).join('');
+                    tableBody.innerHTML = rows
+                        .map((item, index) => ({ item, index, date: parseNewsDate(item.date) }))
+                        .sort((a, b) => {
+                            if (a.date === null) return b.date === null ? a.index - b.index : 1;
+                            if (b.date === null) return -1;
+                            return b.date - a.date || a.index - b.index;
+                        })
+                        .map(({ item }) => {
+                            const placeText = item.place || item.venue || '';
+                            return `
+                                <tr>
+                                    <td>${renderCell(item.role, item.link_role)}</td>
+                                    <td>${renderCell(item.event, item.link_event)}</td>
+                                    <td>${escapeHtml(placeText)}</td>
+                                    <td>${escapeHtml(item.date)}</td>
+                                    <td>${item.link_media ? `<a class="news-media-button" href="${escapeHtml(item.link_media)}" target="_blank" rel="noopener noreferrer">Media</a>` : ''}</td>
+                                </tr>
+                            `;
+                        }).join('');
                 } catch (err) {
                     tableBody.innerHTML = '<tr><td colspan="5" class="news-table-empty">Failed to load news.</td></tr>';
                     console.error(err);
